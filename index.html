@@ -49,6 +49,7 @@ body{
 .darkness{
   position:absolute;
   inset:0;
+
   z-index:80;
 
   background:rgba(6,7,9,.93);
@@ -138,6 +139,7 @@ body{
 
 .switch-label{
   color:#fff;
+
   font-size:15px;
 
   text-shadow:
@@ -268,7 +270,7 @@ body{
 
 
 /* =========================================
-   ФОТОГРАФИЯ ДО ПРОЯВЛЕНИЯ
+   ФОТОГРАФИЯ
 ========================================= */
 
 .photo{
@@ -282,12 +284,6 @@ body{
 
   pointer-events:none;
   user-select:none;
-
-  /*
-    Фото уже немного видно,
-    но оно всё ещё выглядит
-    как непроявленное.
-  */
 
   filter:
     grayscale(.92)
@@ -319,10 +315,7 @@ body{
 
 
 /* =========================================
-   ЗАСВЕЧЕННЫЙ СЛОЙ
-
-   Теперь он более прозрачный.
-   Видны только слабые очертания.
+   ЗАСВЕЧЕННАЯ ФОТОБУМАГА
 ========================================= */
 
 .exposure-layer{
@@ -354,9 +347,6 @@ body{
   transition:
     opacity 1.8s ease;
 }
-
-
-/* лёгкая неоднородность фотобумаги */
 
 .exposure-layer::after{
   content:"";
@@ -403,7 +393,7 @@ body{
 
 
 /* =========================================
-   WATER BLOB
+   ВОДЯНЫЕ ПЯТНА
 ========================================= */
 
 .water-blob{
@@ -458,7 +448,7 @@ body{
 
 
 /* =========================================
-   WATER EDGE
+   КРАЙ РАСТЕКАНИЯ
 ========================================= */
 
 .water-edge{
@@ -549,7 +539,7 @@ body{
 
 
 /* =========================================
-   ВОДЯНЫЕ БЛИКИ
+   ДВИЖУЩИЕСЯ БЛИКИ
 ========================================= */
 
 .water-shine{
@@ -592,7 +582,7 @@ body{
 }
 
 
-/* проходящий световой блик */
+/* проходящий блик */
 
 .full-water::after{
   content:"";
@@ -736,6 +726,9 @@ body{
 
 /* =========================================
    МОКРАЯ ЩЕТИНА
+
+   Только блеск.
+   Постоянной капли больше НЕТ.
 ========================================= */
 
 .wet-glow{
@@ -777,78 +770,9 @@ body{
 
 
 /* =========================================
-   КАПЛЯ НА КИСТИ
-========================================= */
+   ПАДАЮЩИЕ МАЛЕНЬКИЕ КАПЛИ
 
-.brush-drop{
-  position:absolute;
-
-  left:7%;
-  bottom:-1%;
-
-  width:12px;
-  height:18px;
-
-  z-index:10;
-
-  opacity:0;
-
-  pointer-events:none;
-
-  border-radius:
-    50% 50% 58% 58%;
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(255,255,255,.96),
-      rgba(192,230,245,.68)
-    );
-
-  box-shadow:
-    inset -2px -3px 5px
-    rgba(90,150,180,.2),
-
-    inset 2px 2px 5px
-    rgba(255,255,255,.9),
-
-    0 2px 5px
-    rgba(40,80,100,.15);
-
-  transform-origin:
-    50% 0%;
-
-  transition:
-    opacity .25s ease;
-}
-
-.brush-wrap.wet .brush-drop{
-  opacity:1;
-
-  animation:
-    dropSwing 1s
-    ease-in-out
-    infinite alternate;
-}
-
-@keyframes dropSwing{
-
-  from{
-    transform:
-      rotate(-8deg)
-      scaleY(.92);
-  }
-
-  to{
-    transform:
-      rotate(8deg)
-      scaleY(1.12);
-  }
-}
-
-
-/* =========================================
-   ПАДАЮЩИЕ КАПЛИ
+   Их оставляем.
 ========================================= */
 
 .falling-drop{
@@ -897,7 +821,7 @@ body{
 
 
 /* =========================================
-   КНОПКА СЛЕДУЮЩАЯ
+   СЛЕДУЮЩАЯ ФОТОГРАФИЯ
 ========================================= */
 
 .next-button{
@@ -952,59 +876,6 @@ body{
   transform:
     translateX(-50%)
     translateY(0);
-}
-
-
-/* =========================================
-   ФИНАЛ
-========================================= */
-
-.success{
-  position:absolute;
-
-  left:50%;
-  top:50%;
-
-  z-index:290;
-
-  transform:
-    translate(-50%,-50%)
-    scale(.8);
-
-  padding:
-    18px 30px;
-
-  border-radius:20px;
-
-  background:
-    rgba(255,250,239,.97);
-
-  color:#624226;
-
-  font-size:
-    clamp(22px,2.7vw,38px);
-
-  font-weight:800;
-
-  box-shadow:
-    0 15px 42px
-    rgba(45,25,10,.25);
-
-  opacity:0;
-
-  pointer-events:none;
-
-  transition:
-    opacity .4s ease,
-    transform .4s ease;
-}
-
-.success.show{
-  opacity:1;
-
-  transform:
-    translate(-50%,-50%)
-    scale(1);
 }
 
 
@@ -1157,10 +1028,6 @@ body{
       class="wet-glow"
     ></div>
 
-    <div
-      class="brush-drop"
-    ></div>
-
   </div>
 
 
@@ -1170,14 +1037,6 @@ body{
   >
     Следующая фотография →
   </button>
-
-
-  <div
-    id="success"
-    class="success"
-  >
-    ✨ Все фотографии готовы! ✨
-  </div>
 
 </div>
 
@@ -1209,52 +1068,79 @@ let currentPhoto = 0;
 ========================================= */
 
 const game =
-  document.getElementById("game");
+  document.getElementById(
+    "game"
+  );
 
 const instruction =
-  document.getElementById("instruction");
+  document.getElementById(
+    "instruction"
+  );
 
 const darkness =
-  document.getElementById("darkness");
+  document.getElementById(
+    "darkness"
+  );
 
 const lightSwitch =
-  document.getElementById("lightSwitch");
+  document.getElementById(
+    "lightSwitch"
+  );
 
 const switchWrap =
-  document.getElementById("switchWrap");
+  document.getElementById(
+    "switchWrap"
+  );
 
 const photoCard =
-  document.getElementById("photoCard");
+  document.getElementById(
+    "photoCard"
+  );
 
 const photoArea =
-  document.getElementById("photoArea");
+  document.getElementById(
+    "photoArea"
+  );
 
 const photo =
-  document.getElementById("photo");
+  document.getElementById(
+    "photo"
+  );
 
 const exposureLayer =
-  document.getElementById("exposureLayer");
+  document.getElementById(
+    "exposureLayer"
+  );
 
 const developer =
-  document.getElementById("developer");
+  document.getElementById(
+    "developer"
+  );
 
 const brushWrap =
-  document.getElementById("brushWrap");
+  document.getElementById(
+    "brushWrap"
+  );
 
 const waterLayer =
-  document.getElementById("waterLayer");
+  document.getElementById(
+    "waterLayer"
+  );
 
 const waterEdge =
-  document.getElementById("waterEdge");
+  document.getElementById(
+    "waterEdge"
+  );
 
 const fullWater =
-  document.getElementById("fullWater");
+  document.getElementById(
+    "fullWater"
+  );
 
 const nextButton =
-  document.getElementById("nextButton");
-
-const success =
-  document.getElementById("success");
+  document.getElementById(
+    "nextButton"
+  );
 
 
 /* =========================================
@@ -1324,6 +1210,7 @@ function changeInstruction(text){
     },
     250
   );
+
 }
 
 
@@ -1336,7 +1223,8 @@ lightSwitch.addEventListener(
   () => {
 
     if(
-      stage !== "dark"
+      stage !==
+      "dark"
     ) return;
 
 
@@ -1435,21 +1323,12 @@ function startPhoto(){
     null;
 
 
-  /*
-    Фото сразу находится
-    под засвеченным слоем.
-  */
-
   exposureLayer.style.transition =
     "none";
 
   exposureLayer.style.opacity =
     "1";
 
-
-  /*
-    Удаляем старые водяные пятна.
-  */
 
   waterLayer
     .querySelectorAll(
@@ -1479,10 +1358,6 @@ function startPhoto(){
     "developed"
   );
 
-
-  /*
-    Возвращаем кисть справа.
-  */
 
   brushWrap.classList.remove(
     "wet"
@@ -1617,12 +1492,10 @@ brushWrap.addEventListener(
       "auto";
 
     brushWrap.style.left =
-      rect.left +
-      "px";
+      rect.left + "px";
 
     brushWrap.style.top =
-      rect.top +
-      "px";
+      rect.top + "px";
 
   }
 );
@@ -1687,7 +1560,8 @@ brushWrap.addEventListener(
 
 
     if(
-      stage === "dip"
+      stage ===
+      "dip"
     ){
 
       checkDip();
@@ -1696,7 +1570,8 @@ brushWrap.addEventListener(
 
 
     if(
-      stage === "painting" &&
+      stage ===
+      "painting" &&
       brushWet
     ){
 
@@ -1756,7 +1631,7 @@ brushWrap.addEventListener(
 
 
 /* =========================================
-   МАКАНИЕ
+   МАКАНИЕ В ПРОЯВИТЕЛЬ
 ========================================= */
 
 function checkDip(){
@@ -1849,7 +1724,7 @@ function splash(x,y){
 
 
 /* =========================================
-   КАПЛЯ
+   МАЛЕНЬКИЕ КАПЛИ
 ========================================= */
 
 function createDrop(x,y){
@@ -1886,7 +1761,7 @@ function createDrop(x,y){
 
 
 /* =========================================
-   ОТРЫВАЮЩИЕСЯ КАПЛИ
+   КАПЛЯ МОЖЕТ СОРВАТЬСЯ ПРИ ДВИЖЕНИИ
 ========================================= */
 
 function looseDrop(
@@ -2071,7 +1946,7 @@ function paintWater(
 
 
 /* =========================================
-   ВОДЯНОЕ ПЯТНО
+   WATER BLOB
 ========================================= */
 
 function createWaterBlob(
@@ -2144,7 +2019,8 @@ function createWaterBlob(
 function beginFlood(){
 
   if(
-    stage !== "painting"
+    stage !==
+    "painting"
   ) return;
 
 
@@ -2264,7 +2140,7 @@ function beginFlood(){
 
 
 /* =========================================
-   КРУПНОЕ ВОДЯНОЕ ПЯТНО
+   КРУПНЫЕ ПЯТНА
 ========================================= */
 
 function createLargeBlob(
@@ -2318,7 +2194,7 @@ function createLargeBlob(
 
 
 /* =========================================
-   ПРОЯВЛЕНИЕ ФОТО
+   ПРОЯВЛЕНИЕ
 ========================================= */
 
 photoCard.addEventListener(
@@ -2326,7 +2202,8 @@ photoCard.addEventListener(
   () => {
 
     if(
-      stage !== "ready"
+      stage !==
+      "ready"
     ) return;
 
 
@@ -2366,9 +2243,17 @@ photoCard.addEventListener(
     setTimeout(
       () => {
 
+        /*
+          Если ещё есть фотографии —
+          показываем кнопку.
+
+          Если это последняя —
+          финальный текст появляется СВЕРХУ.
+        */
+
         if(
           currentPhoto <
-          photos.length-1
+          photos.length - 1
         ){
 
           nextButton.classList.add(
@@ -2377,8 +2262,12 @@ photoCard.addEventListener(
 
         }else{
 
-          success.classList.add(
-            "show"
+          instruction.textContent =
+            "Спасибо, что помог проявить все фотографии! ✨";
+
+
+          instruction.classList.remove(
+            "hide"
           );
 
         }
@@ -2404,7 +2293,7 @@ nextButton.addEventListener(
 
     if(
       currentPhoto >=
-      photos.length-1
+      photos.length - 1
     ) return;
 
 
@@ -2419,8 +2308,9 @@ nextButton.addEventListener(
 
 
     /*
-      Сначала закрываем старую фотографию,
-      потом меняем картинку.
+      Сначала закрываем старое фото,
+      чтобы новую капибару
+      нельзя было подсмотреть.
     */
 
     exposureLayer.style.transition =
@@ -2479,11 +2369,6 @@ nextButton.addEventListener(
         photoCard.style.opacity =
           "1";
 
-
-        /*
-          Подгружаем уже следующую,
-          но не показываем её.
-        */
 
         preloadPhoto(
           currentPhoto + 1
