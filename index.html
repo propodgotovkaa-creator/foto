@@ -25,6 +25,7 @@ body{
 
 body{
   font-family:Arial, Helvetica, sans-serif;
+
   background:
     radial-gradient(
       circle at 50% 25%,
@@ -36,6 +37,7 @@ body{
 
 .game{
   position:relative;
+
   width:100vw;
   height:100vh;
 
@@ -45,6 +47,11 @@ body{
 
   overflow:hidden;
 }
+
+
+/* =========================
+   ТЕМНОТА
+========================= */
 
 .darkness{
   position:absolute;
@@ -64,6 +71,11 @@ body{
 .darkness.off{
   opacity:0;
 }
+
+
+/* =========================
+   ИНСТРУКЦИЯ
+========================= */
 
 .instruction{
   position:absolute;
@@ -112,9 +124,10 @@ body{
   pointer-events:none;
 }
 
-/* ========================
+
+/* =========================
    ВЫКЛЮЧАТЕЛЬ
-======================== */
+========================= */
 
 .switch-wrap{
   position:absolute;
@@ -132,6 +145,9 @@ body{
   align-items:center;
 
   gap:8px;
+
+  transition:
+    opacity .4s ease;
 }
 
 .switch-label{
@@ -204,9 +220,10 @@ body{
     );
 }
 
-/* ========================
+
+/* =========================
    ФОТО
-======================== */
+========================= */
 
 .photo-card{
   position:relative;
@@ -236,6 +253,8 @@ body{
   transition:
     opacity .8s ease,
     transform .8s ease;
+
+  cursor:pointer;
 }
 
 .photo-card.visible{
@@ -276,11 +295,11 @@ body{
 
   filter:
     grayscale(.78)
-    sepia(.28)
+    sepia(.22)
     blur(8px)
-    brightness(1.4)
+    brightness(1.42)
     contrast(.72)
-    saturate(.35);
+    saturate(.34);
 
   opacity:.64;
 
@@ -308,9 +327,10 @@ body{
     scale(1);
 }
 
-/* ========================
-   ВЛАЖНЫЕ СЛЕДЫ
-======================== */
+
+/* =========================
+   ВОДЯНОЙ РАСТВОР
+========================= */
 
 #liquidCanvas{
   position:absolute;
@@ -321,11 +341,16 @@ body{
   height:100%;
 
   pointer-events:none;
+
+  transition:
+    opacity 1.3s ease,
+    filter .8s ease;
 }
 
-/* ========================
-   КИСТОЧКА + БАНОЧКА
-======================== */
+
+/* =========================
+   ИНСТРУМЕНТЫ
+========================= */
 
 .tools{
   position:absolute;
@@ -371,15 +396,15 @@ body{
   background:
     linear-gradient(
       180deg,
-      #f7eac5,
-      #d9b86d
+      #eaf7fb,
+      #cfe8ee
     );
 
   border:
     3px solid
-    rgba(105,73,37,.35);
+    rgba(80,110,120,.3);
 
-  color:#6c4a29;
+  color:#41636c;
 
   text-align:center;
 
@@ -387,7 +412,7 @@ body{
 
   box-shadow:
     0 8px 18px
-    rgba(69,45,20,.2);
+    rgba(50,80,90,.18);
 }
 
 .jar::before{
@@ -404,7 +429,7 @@ body{
 
   border-radius:5px;
 
-  background:#856542;
+  background:#6d8990;
 }
 
 .jar-small{
@@ -414,6 +439,11 @@ body{
 
   opacity:.7;
 }
+
+
+/* =========================
+   КИСТОЧКА
+========================= */
 
 .brush{
   position:relative;
@@ -455,10 +485,6 @@ body{
       #9b663c,
       #704326
     );
-
-  box-shadow:
-    inset 0 2px 3px
-    rgba(255,255,255,.2);
 }
 
 .brush-metal{
@@ -496,14 +522,15 @@ body{
   background:
     linear-gradient(
       90deg,
-      #ebcc8c,
-      #c58f51
+      #e1c58e,
+      #b88d5c
     );
 }
 
-/* ========================
+
+/* =========================
    ВСПЫШКА
-======================== */
+========================= */
 
 .flash{
   position:absolute;
@@ -539,9 +566,10 @@ body{
   }
 }
 
-/* ========================
+
+/* =========================
    ФИНАЛ
-======================== */
+========================= */
 
 .success{
   position:absolute;
@@ -591,7 +619,9 @@ body{
     scale(1);
 }
 
+
 @media(max-width:700px){
+
   .switch-wrap{
     right:14px;
   }
@@ -607,10 +637,12 @@ body{
     transform:
       scale(.85);
   }
+
 }
 
 </style>
 </head>
+
 
 <body>
 
@@ -623,10 +655,12 @@ body{
     Включи свет 💡
   </div>
 
+
   <div
     class="darkness"
     id="darkness"
   ></div>
+
 
   <div
     class="switch-wrap"
@@ -641,12 +675,15 @@ body{
       class="light-switch"
       id="lightSwitch"
     >
+
       <span
         class="switch-button"
       ></span>
+
     </button>
 
   </div>
+
 
   <div
     class="photo-card"
@@ -658,6 +695,7 @@ body{
       id="photoArea"
     >
 
+      <!-- Временная картинка -->
       <img
         id="photo"
         class="photo"
@@ -679,6 +717,7 @@ body{
 
   </div>
 
+
   <div
     class="tools"
     id="tools"
@@ -686,10 +725,12 @@ body{
 
     <div class="jar">
       ПРОЯВИТЕЛЬ
+
       <div class="jar-small">
-        фотораствор
+        раствор
       </div>
     </div>
+
 
     <div
       class="brush"
@@ -712,6 +753,7 @@ body{
 
   </div>
 
+
   <div
     class="success"
     id="success"
@@ -721,82 +763,58 @@ body{
 
 </div>
 
+
 <script>
 
 const lightSwitch =
-  document.getElementById(
-    "lightSwitch"
-  );
+  document.getElementById("lightSwitch");
 
 const darkness =
-  document.getElementById(
-    "darkness"
-  );
+  document.getElementById("darkness");
 
 const instruction =
-  document.getElementById(
-    "instruction"
-  );
+  document.getElementById("instruction");
 
 const switchWrap =
-  document.getElementById(
-    "switchWrap"
-  );
+  document.getElementById("switchWrap");
 
 const photoCard =
-  document.getElementById(
-    "photoCard"
-  );
+  document.getElementById("photoCard");
 
 const photoArea =
-  document.getElementById(
-    "photoArea"
-  );
+  document.getElementById("photoArea");
 
 const photo =
-  document.getElementById(
-    "photo"
-  );
+  document.getElementById("photo");
 
 const tools =
-  document.getElementById(
-    "tools"
-  );
+  document.getElementById("tools");
 
 const brush =
-  document.getElementById(
-    "brush"
-  );
+  document.getElementById("brush");
 
 const canvas =
-  document.getElementById(
-    "liquidCanvas"
-  );
+  document.getElementById("liquidCanvas");
 
 const ctx =
   canvas.getContext("2d");
 
 const flash =
-  document.getElementById(
-    "flash"
-  );
+  document.getElementById("flash");
 
 const success =
-  document.getElementById(
-    "success"
-  );
+  document.getElementById("success");
 
 
-/* ==========================
+/* =========================
    ЭТАПЫ
-==========================
 
    dark
    brush
+   spreading
    ready
    developed
-
-========================== */
+========================= */
 
 let stage = "dark";
 
@@ -806,20 +824,19 @@ let DPR = 1;
 
 
 /*
-  Сколько реальных движений кистью
-  нужно сделать.
-
-  Не нужно мазать всю фотографию.
+  Ребёнок водит кисточкой
+  примерно 2 секунды.
 */
 
-const REQUIRED_BRUSH_DISTANCE = 430;
+const REQUIRED_BRUSH_TIME = 2000;
 
-let brushedDistance = 0;
+let brushActiveTime = 0;
+let lastBrushFrameTime = null;
 
 
-/* ==========================
+/* =========================
    CANVAS
-========================== */
+========================= */
 
 function resizeCanvas(){
 
@@ -836,14 +853,10 @@ function resizeCanvas(){
     );
 
   canvas.width =
-    Math.round(
-      W * DPR
-    );
+    Math.round(W * DPR);
 
   canvas.height =
-    Math.round(
-      H * DPR
-    );
+    Math.round(H * DPR);
 
   ctx.setTransform(
     DPR,0,0,DPR,0,0
@@ -851,9 +864,9 @@ function resizeCanvas(){
 }
 
 
-/* ==========================
+/* =========================
    ИНСТРУКЦИЯ
-========================== */
+========================= */
 
 function changeInstruction(text){
 
@@ -877,9 +890,9 @@ function changeInstruction(text){
 }
 
 
-/* ==========================
+/* =========================
    СВЕТ
-========================== */
+========================= */
 
 lightSwitch.addEventListener(
   "click",
@@ -889,13 +902,16 @@ lightSwitch.addEventListener(
 
     stage = "brush";
 
+
     lightSwitch.classList.add(
       "on"
     );
 
+
     darkness.classList.add(
       "off"
     );
+
 
     instruction.classList.add(
       "hide"
@@ -924,8 +940,9 @@ lightSwitch.addEventListener(
         tools.style.pointerEvents =
           "auto";
 
+
         changeInstruction(
-          "Нанеси проявитель на фотографию кисточкой 🖌️"
+          "Нанеси проявитель кисточкой 🖌️"
         );
 
       },
@@ -947,27 +964,9 @@ lightSwitch.addEventListener(
 );
 
 
-/* ==========================
-   КИСТОЧКА
-========================== */
-
-let dragging = false;
-
-let brushX = 0;
-let brushY = 0;
-
-let previousX = null;
-let previousY = null;
-
-
-/*
-  Запоминаем исходное положение,
-  чтобы потом кисть можно было вернуть.
-*/
-
-let homeLeft = 0;
-let homeTop = 0;
-
+/* =========================
+   ПОЛОЖЕНИЕ НА ФОТО
+========================= */
 
 function localPhotoPosition(
   clientX,
@@ -977,7 +976,9 @@ function localPhotoPosition(
   const rect =
     photoArea.getBoundingClientRect();
 
+
   return {
+
     x:
       clientX -
       rect.left,
@@ -991,24 +992,19 @@ function localPhotoPosition(
       clientX <= rect.right &&
       clientY >= rect.top &&
       clientY <= rect.bottom
+
   };
 }
 
 
-/* ==========================
-   РИСУЕМ ЖИДКОСТЬ
-========================== */
+/* =========================
+   РИСУЕМ ВОДЯНОЙ СЛЕД
+========================= */
 
 function paintLiquid(x,y){
 
-  /*
-    Не краска.
+  const radius = 38;
 
-    Очень лёгкий влажный
-    янтарно-золотистый блеск.
-  */
-
-  const radius = 34;
 
   const gradient =
     ctx.createRadialGradient(
@@ -1021,20 +1017,24 @@ function paintLiquid(x,y){
       radius
     );
 
-  gradient.addColorStop(
-    0,
-    "rgba(255,236,174,.24)"
-  );
 
   gradient.addColorStop(
-    .40,
-    "rgba(239,194,104,.16)"
+    0,
+    "rgba(225,245,255,.22)"
   );
+
+
+  gradient.addColorStop(
+    .42,
+    "rgba(210,235,248,.14)"
+  );
+
 
   gradient.addColorStop(
     .78,
-    "rgba(255,245,214,.08)"
+    "rgba(245,252,255,.07)"
   );
+
 
   gradient.addColorStop(
     1,
@@ -1045,7 +1045,9 @@ function paintLiquid(x,y){
   ctx.fillStyle =
     gradient;
 
+
   ctx.beginPath();
+
 
   ctx.arc(
     x,
@@ -1055,36 +1057,54 @@ function paintLiquid(x,y){
     Math.PI*2
   );
 
+
   ctx.fill();
 
 
   /*
-    Маленький световой блик —
-    эффект влажной поверхности.
+    Влажный блик
   */
 
   ctx.fillStyle =
-    "rgba(255,255,255,.12)";
+    "rgba(255,255,255,.16)";
+
 
   ctx.beginPath();
 
+
   ctx.ellipse(
     x - 8,
-    y - 8,
-    14,
+    y - 9,
+
+    16,
     4,
-    -.4,
+
+    -.35,
+
     0,
     Math.PI*2
   );
+
 
   ctx.fill();
 }
 
 
-/* ==========================
+/* =========================
+   КИСТЬ
+========================= */
+
+let dragging = false;
+
+let pointerId = null;
+
+let grabOffsetX = 0;
+let grabOffsetY = 0;
+
+
+/* =========================
    НАЧАЛО DRAG
-========================== */
+========================= */
 
 brush.addEventListener(
   "pointerdown",
@@ -1094,26 +1114,30 @@ brush.addEventListener(
 
     e.preventDefault();
 
+
     dragging = true;
+
+    pointerId =
+      e.pointerId;
+
 
     brush.setPointerCapture(
       e.pointerId
     );
 
+
     const rect =
       brush.getBoundingClientRect();
 
-    homeLeft =
-      brush.offsetLeft;
 
-    homeTop =
-      brush.offsetTop;
+    grabOffsetX =
+      e.clientX -
+      rect.left;
 
-    previousX =
-      e.clientX;
+    grabOffsetY =
+      e.clientY -
+      rect.top;
 
-    previousY =
-      e.clientY;
 
     brush.style.position =
       "fixed";
@@ -1127,13 +1151,17 @@ brush.addEventListener(
     brush.style.zIndex =
       "100";
 
+
+    lastBrushFrameTime =
+      performance.now();
+
   }
 );
 
 
-/* ==========================
-   ДВИГАЕМ КИСТЬ
-========================== */
+/* =========================
+   ДВИЖЕНИЕ КИСТИ
+========================= */
 
 brush.addEventListener(
   "pointermove",
@@ -1145,17 +1173,13 @@ brush.addEventListener(
     ) return;
 
 
-    const rect =
-      brush.getBoundingClientRect();
-
-
     const newLeft =
       e.clientX -
-      rect.width * .48;
+      grabOffsetX;
 
     const newTop =
       e.clientY -
-      rect.height * .48;
+      grabOffsetY;
 
 
     brush.style.left =
@@ -1172,69 +1196,97 @@ brush.addEventListener(
       );
 
 
-    if(p.inside){
+    if(!p.inside){
 
-      paintLiquid(
-        p.x,
-        p.y
-      );
+      lastBrushFrameTime =
+        performance.now();
 
-
-      if(
-        previousX !== null
-      ){
-
-        const dx =
-          e.clientX -
-          previousX;
-
-        const dy =
-          e.clientY -
-          previousY;
-
-        brushedDistance +=
-          Math.sqrt(
-            dx*dx +
-            dy*dy
-          );
-
-      }
+      return;
+    }
 
 
-      if(
-        brushedDistance >=
-        REQUIRED_BRUSH_DISTANCE
-      ){
+    /*
+      Рисуем воду
+    */
 
-        finishBrushStage();
+    paintLiquid(
+      p.x,
+      p.y
+    );
 
-      }
+
+    /*
+      Считаем только время,
+      когда кисточка реально
+      находится на фотографии.
+    */
+
+    const now =
+      performance.now();
+
+
+    if(
+      lastBrushFrameTime !== null
+    ){
+
+      brushActiveTime +=
+        now -
+        lastBrushFrameTime;
 
     }
 
 
-    previousX =
-      e.clientX;
+    lastBrushFrameTime =
+      now;
 
-    previousY =
-      e.clientY;
+
+    /*
+      Через ~2 секунды запускаем
+      автоматическое растекание.
+    */
+
+    if(
+      brushActiveTime >=
+      REQUIRED_BRUSH_TIME
+    ){
+
+      spreadLiquidOverPhoto();
+
+    }
 
   }
 );
 
 
-/* ==========================
-   ОТПУСТИЛИ КИСТЬ
-========================== */
+/* =========================
+   POINTER UP
+========================= */
 
 brush.addEventListener(
   "pointerup",
-  () => {
+  e => {
 
     dragging = false;
 
-    previousX = null;
-    previousY = null;
+    lastBrushFrameTime = null;
+
+
+    if(
+      pointerId !== null
+    ){
+
+      try{
+
+        brush.releasePointerCapture(
+          pointerId
+        );
+
+      }catch(err){}
+
+    }
+
+
+    pointerId = null;
 
   }
 );
@@ -1246,54 +1298,213 @@ brush.addEventListener(
 
     dragging = false;
 
-    previousX = null;
-    previousY = null;
+    lastBrushFrameTime = null;
+
+    pointerId = null;
 
   }
 );
 
 
-/* ==========================
-   ПРОЯВИТЕЛЬ НАНЕСЁН
-========================== */
+/* =========================
+   АВТОМАТИЧЕСКОЕ РАСТЕКАНИЕ
+========================= */
 
-function finishBrushStage(){
+function spreadLiquidOverPhoto(){
 
   if(stage !== "brush") return;
 
-  stage = "ready";
 
-  dragging = false;
+  stage =
+    "spreading";
 
-  brush.style.opacity =
-    ".35";
+
+  dragging =
+    false;
+
 
   brush.style.pointerEvents =
     "none";
 
 
   changeInstruction(
-    "Готово! Теперь нажми на фотографию 📸"
+    "Раствор растекается по фотографии..."
   );
 
 
-  /*
-    Жидкость чуть-чуть
-    равномерно растекается.
-  */
+  const start =
+    performance.now();
 
-  canvas.style.transition =
-    "filter .8s ease";
+
+  const duration =
+    1200;
+
+
+  function animateSpread(now){
+
+    const t =
+      Math.min(
+        1,
+        (now-start) /
+        duration
+      );
+
+
+    const ease =
+      1 -
+      Math.pow(
+        1-t,
+        3
+      );
+
+
+    /*
+      Очень лёгкая водяная плёнка
+    */
+
+    ctx.save();
+
+
+    ctx.fillStyle =
+      `rgba(
+        210,
+        235,
+        248,
+        ${0.015 + 0.055 * ease}
+      )`;
+
+
+    ctx.fillRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+
+    /*
+      Добавляем широкие
+      мягкие водяные блики.
+    */
+
+    for(
+      let i=0;
+      i<6;
+      i++
+    ){
+
+      const y =
+        H *
+        (
+          .10 +
+          i*.16
+        );
+
+
+      const gradient =
+        ctx.createLinearGradient(
+          0,
+          y,
+          W,
+          y+35
+        );
+
+
+      gradient.addColorStop(
+        0,
+        "rgba(255,255,255,0)"
+      );
+
+
+      gradient.addColorStop(
+        .5,
+        `rgba(
+          255,
+          255,
+          255,
+          ${.025 + .055*ease}
+        )`
+      );
+
+
+      gradient.addColorStop(
+        1,
+        "rgba(255,255,255,0)"
+      );
+
+
+      ctx.fillStyle =
+        gradient;
+
+
+      ctx.fillRect(
+        0,
+        y,
+        W,
+        26
+      );
+    }
+
+
+    ctx.restore();
+
+
+    if(t < 1){
+
+      requestAnimationFrame(
+        animateSpread
+      );
+
+    }else{
+
+      finishBrushStage();
+
+    }
+
+  }
+
+
+  requestAnimationFrame(
+    animateSpread
+  );
+}
+
+
+/* =========================
+   РАСТВОР НАНЕСЁН
+========================= */
+
+function finishBrushStage(){
+
+  if(stage !== "spreading") return;
+
+
+  stage =
+    "ready";
+
+
+  brush.style.opacity =
+    ".3";
+
+
+  tools.style.pointerEvents =
+    "none";
+
 
   canvas.style.filter =
-    "blur(2px)";
+    "blur(1.5px)";
+
+
+  changeInstruction(
+    "Готово! Теперь нажми на фотографию 📸"
+  );
 
 }
 
 
-/* ==========================
+/* =========================
    ПРОЯВЛЕНИЕ
-========================== */
+========================= */
 
 photoCard.addEventListener(
   "click",
@@ -1301,11 +1512,15 @@ photoCard.addEventListener(
 
     if(stage !== "ready") return;
 
-    stage = "developed";
+
+    stage =
+      "developed";
+
 
     instruction.classList.add(
       "hide"
     );
+
 
     tools.classList.remove(
       "show"
@@ -1313,25 +1528,24 @@ photoCard.addEventListener(
 
 
     /*
-      Следы проявителя растворяются.
+      Водяной слой исчезает
     */
-
-    canvas.style.transition =
-      "opacity 1.4s ease";
 
     canvas.style.opacity =
       "0";
 
 
     /*
-      Небольшая вспышка.
+      Вспышка
     */
 
     flash.classList.remove(
       "active"
     );
 
+
     void flash.offsetWidth;
+
 
     flash.classList.add(
       "active"
@@ -1339,7 +1553,7 @@ photoCard.addEventListener(
 
 
     /*
-      Снимок проявляется.
+      Проявляем фото
     */
 
     photo.classList.add(
@@ -1367,16 +1581,16 @@ photoCard.addEventListener(
         );
 
       },
-      3800
+      3900
     );
 
   }
 );
 
 
-/* ==========================
+/* =========================
    START
-========================== */
+========================= */
 
 window.addEventListener(
   "load",
