@@ -11,82 +11,67 @@
 <title>Фотостудия капибары</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
 html,
-body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-
-/* =========================
-   ВСЯ ИГРА
-========================= */
-
-.game {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow: hidden;
-
+body{
+  font-family:Arial, Helvetica, sans-serif;
   background:
     radial-gradient(
-      circle at 50% 30%,
-      #fff8e9 0%,
-      #f1dcc0 55%,
-      #d7b68c 100%
+      circle at 50% 25%,
+      #fff8eb 0%,
+      #f0ddc2 56%,
+      #d8b98f 100%
     );
 }
 
+.game{
+  position:relative;
+  width:100vw;
+  height:100vh;
 
-/* =========================
-   ЗАТЕМНЕНИЕ
-========================= */
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-.darkness {
-  position: absolute;
-  inset: 0;
+  overflow:hidden;
+}
 
-  z-index: 20;
+.darkness{
+  position:absolute;
+  inset:0;
+
+  z-index:30;
 
   background:
-    rgba(9, 11, 15, 0.93);
+    rgba(8,10,14,0.94);
+
+  pointer-events:none;
 
   transition:
-    opacity 1.5s ease;
-
-  pointer-events: none;
+    opacity 1.4s ease;
 }
 
-.darkness.light-on {
-  opacity: 0;
+.darkness.off{
+  opacity:0;
 }
 
+.instruction{
+  position:absolute;
 
-/* =========================
-   ИНСТРУКЦИЯ
-========================= */
+  left:50%;
+  top:28px;
 
-.instruction {
-  position: absolute;
-  top: 35px;
-  left: 50%;
-
-  z-index: 40;
+  z-index:60;
 
   transform:
     translateX(-50%);
@@ -94,238 +79,213 @@ body {
   padding:
     12px 22px;
 
-  border-radius: 18px;
+  border-radius:18px;
 
   background:
-    rgba(255,255,255,0.92);
+    rgba(255,255,255,0.94);
 
-  color:
-    #6f5036;
+  color:#6d4d31;
 
   font-size:
-    clamp(18px, 2vw, 28px);
+    clamp(18px,2vw,28px);
 
-  font-weight: 700;
+  font-weight:800;
 
-  text-align: center;
+  text-align:center;
 
   box-shadow:
-    0 8px 26px
-    rgba(0,0,0,0.18);
+    0 8px 25px
+    rgba(0,0,0,0.16);
 
   transition:
-    opacity 0.45s ease,
-    transform 0.45s ease;
+    opacity .4s ease,
+    transform .4s ease;
 }
 
-.instruction.hide {
-  opacity: 0;
+.instruction.hide{
+  opacity:0;
 
   transform:
     translateX(-50%)
     translateY(-10px);
 
-  pointer-events: none;
+  pointer-events:none;
 }
 
-
-/* =========================
+/* ========================
    ВЫКЛЮЧАТЕЛЬ
-========================= */
+======================== */
 
-.switch-wrap {
-  position: absolute;
+.switch-wrap{
+  position:absolute;
 
-  right: 45px;
-  top: 50%;
-
-  z-index: 50;
+  right:40px;
+  top:50%;
 
   transform:
     translateY(-50%);
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  z-index:70;
 
-  gap: 10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+
+  gap:8px;
 }
 
+.switch-label{
+  color:#fff;
 
-.switch-label {
-  color: white;
-
-  font-size: 15px;
+  font-size:15px;
 
   text-shadow:
     0 2px 5px
-    rgba(0,0,0,0.7);
+    rgba(0,0,0,.7);
 }
 
+.light-switch{
+  position:relative;
 
-.switch {
-  position: relative;
+  width:72px;
+  height:108px;
 
-  width: 74px;
-  height: 112px;
+  border:0;
 
-  border: 0;
+  border-radius:12px;
 
-  border-radius: 12px;
+  background:#eee8dc;
 
-  background:
-    #eee8dd;
+  cursor:pointer;
 
   box-shadow:
-    0 7px 20px
-    rgba(0,0,0,0.42),
+    0 8px 22px
+    rgba(0,0,0,.4),
     inset 0 0 0 2px
-    rgba(80,70,60,0.15);
-
-  cursor: pointer;
-
-  transition:
-    transform 0.15s ease;
+    rgba(90,80,65,.12);
 }
 
-.switch:active {
-  transform:
-    scale(0.96);
-}
+.switch-button{
+  position:absolute;
 
+  left:17px;
+  top:16px;
 
-.switch-button {
-  position: absolute;
+  width:38px;
+  height:75px;
 
-  left: 17px;
-  top: 17px;
-
-  width: 40px;
-  height: 78px;
-
-  border-radius: 6px;
+  border-radius:6px;
 
   background:
     linear-gradient(
       180deg,
-      #faf7ef,
-      #cfc8bb
+      #faf8f1,
+      #cbc4b7
     );
 
   box-shadow:
     0 4px 8px
-    rgba(0,0,0,0.30);
+    rgba(0,0,0,.28);
 
   transition:
-    transform 0.35s ease,
-    background 0.35s ease;
+    transform .3s ease,
+    background .3s ease;
 }
 
-
-.switch.on .switch-button {
+.light-switch.on .switch-button{
   transform:
     translateY(12px);
 
   background:
     linear-gradient(
       180deg,
-      #ffe49e,
-      #e8bd54
+      #ffe8a5,
+      #e6ba52
     );
 }
 
+/* ========================
+   ФОТО
+======================== */
 
-/* =========================
-   ФОТОГРАФИЯ
-========================= */
-
-.photo-card {
-  position: relative;
+.photo-card{
+  position:relative;
 
   width:
-    min(70vw, 820px);
+    min(70vw,820px);
 
-  aspect-ratio:
-    4 / 3;
+  aspect-ratio:4/3;
 
   padding:
     14px 14px 48px;
 
-  background:
-    #fff;
+  background:#fff;
 
-  border-radius:
-    10px;
+  border-radius:10px;
 
   box-shadow:
     0 25px 65px
-    rgba(76,49,23,0.27);
+    rgba(78,49,24,.26);
+
+  opacity:0;
 
   transform:
-    rotate(-0.6deg);
-
-  cursor: pointer;
-
-  opacity: 0;
+    scale(.96)
+    rotate(-.5deg);
 
   transition:
-    opacity 0.9s ease,
-    transform 0.9s ease;
+    opacity .8s ease,
+    transform .8s ease;
 }
 
-
-.photo-card.visible {
-  opacity: 1;
+.photo-card.visible{
+  opacity:1;
 
   transform:
-    rotate(-0.6deg)
-    scale(1);
+    scale(1)
+    rotate(-.5deg);
 }
 
+.photo-area{
+  position:relative;
 
-.photo-area {
-  position: relative;
+  width:100%;
+  height:100%;
 
-  width: 100%;
-  height: 100%;
+  overflow:hidden;
 
-  overflow: hidden;
+  border-radius:4px;
 
-  border-radius:
-    4px;
+  background:#eadcc8;
 
-  background:
-    #eee2d3;
+  touch-action:none;
 }
 
+.photo{
+  position:absolute;
 
-.photo {
-  width: 100%;
-  height: 100%;
+  inset:0;
 
-  display: block;
+  width:100%;
+  height:100%;
 
-  object-fit: cover;
+  object-fit:cover;
 
-  user-select: none;
-
-  pointer-events: none;
-
-  /* НЕПРОЯВЛЕННОЕ состояние */
+  pointer-events:none;
+  user-select:none;
 
   filter:
-    grayscale(0.75)
-    sepia(0.35)
-    blur(9px)
-    brightness(1.45)
-    contrast(0.68)
-    saturate(0.35);
+    grayscale(.78)
+    sepia(.28)
+    blur(8px)
+    brightness(1.4)
+    contrast(.72)
+    saturate(.35);
 
-  opacity:
-    0.62;
+  opacity:.64;
 
   transform:
-    scale(1.035);
+    scale(1.03);
 
   transition:
     filter 2.2s cubic-bezier(.22,.8,.3,1),
@@ -333,10 +293,7 @@ body {
     transform 2.2s cubic-bezier(.22,.8,.3,1);
 }
 
-
-/* ПРОЯВИЛАСЬ */
-
-.photo.developed {
+.photo.developed{
   filter:
     grayscale(0)
     sepia(0)
@@ -345,202 +302,319 @@ body {
     contrast(1)
     saturate(1);
 
-  opacity: 1;
+  opacity:1;
 
   transform:
     scale(1);
 }
 
+/* ========================
+   ВЛАЖНЫЕ СЛЕДЫ
+======================== */
 
-/* =========================
-   БЕЛАЯ ВСПЫШКА
-========================= */
+#liquidCanvas{
+  position:absolute;
 
-.flash {
-  position: absolute;
-  inset: 0;
+  inset:0;
 
-  z-index: 12;
+  width:100%;
+  height:100%;
 
-  background:
-    rgba(255,249,218,0);
-
-  pointer-events: none;
+  pointer-events:none;
 }
 
+/* ========================
+   КИСТОЧКА + БАНОЧКА
+======================== */
 
-.flash.active {
+.tools{
+  position:absolute;
+
+  left:35px;
+  bottom:35px;
+
+  z-index:50;
+
+  display:flex;
+  align-items:flex-end;
+
+  gap:20px;
+
+  opacity:0;
+
+  pointer-events:none;
+
+  transform:
+    translateY(15px);
+
+  transition:
+    opacity .45s ease,
+    transform .45s ease;
+}
+
+.tools.show{
+  opacity:1;
+
+  transform:
+    translateY(0);
+}
+
+.jar{
+  width:88px;
+
+  padding:
+    11px 9px 13px;
+
+  border-radius:
+    8px 8px 14px 14px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f7eac5,
+      #d9b86d
+    );
+
+  border:
+    3px solid
+    rgba(105,73,37,.35);
+
+  color:#6c4a29;
+
+  text-align:center;
+
+  font-weight:800;
+
+  box-shadow:
+    0 8px 18px
+    rgba(69,45,20,.2);
+}
+
+.jar::before{
+  content:"";
+
+  display:block;
+
+  width:64px;
+  height:12px;
+
+  margin:
+    -20px auto
+    10px;
+
+  border-radius:5px;
+
+  background:#856542;
+}
+
+.jar-small{
+  margin-top:4px;
+
+  font-size:11px;
+
+  opacity:.7;
+}
+
+.brush{
+  position:relative;
+
+  width:110px;
+  height:48px;
+
+  pointer-events:auto;
+
+  cursor:grab;
+
+  touch-action:none;
+
+  transform:
+    rotate(-18deg);
+
+  transition:
+    opacity .35s ease;
+}
+
+.brush:active{
+  cursor:grabbing;
+}
+
+.brush-handle{
+  position:absolute;
+
+  right:0;
+  top:17px;
+
+  width:78px;
+  height:14px;
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #9b663c,
+      #704326
+    );
+
+  box-shadow:
+    inset 0 2px 3px
+    rgba(255,255,255,.2);
+}
+
+.brush-metal{
+  position:absolute;
+
+  left:23px;
+  top:13px;
+
+  width:32px;
+  height:23px;
+
+  border-radius:4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #a69b8c,
+      #ded8ce,
+      #95897b
+    );
+}
+
+.brush-bristles{
+  position:absolute;
+
+  left:0;
+  top:10px;
+
+  width:32px;
+  height:29px;
+
+  border-radius:
+    14px 4px 4px 14px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #ebcc8c,
+      #c58f51
+    );
+}
+
+/* ========================
+   ВСПЫШКА
+======================== */
+
+.flash{
+  position:absolute;
+  inset:0;
+
+  z-index:15;
+
+  background:
+    rgba(255,249,220,0);
+
+  pointer-events:none;
+}
+
+.flash.active{
   animation:
-    flash 0.8s ease;
+    flashAnim .85s ease;
 }
 
-
-@keyframes flash {
-
-  0% {
+@keyframes flashAnim{
+  0%{
     background:
-      rgba(255,250,220,0);
+      rgba(255,249,220,0);
   }
 
-  35% {
+  35%{
     background:
-      rgba(255,250,220,0.75);
+      rgba(255,249,220,.72);
   }
 
-  100% {
+  100%{
     background:
-      rgba(255,250,220,0);
+      rgba(255,249,220,0);
   }
-
 }
 
-
-/* =========================
-   ПОДСКАЗКА НА ФОТО
-========================= */
-
-.photo-hint {
-  position: absolute;
-
-  left: 50%;
-  bottom: 15px;
-
-  z-index: 10;
-
-  transform:
-    translateX(-50%);
-
-  padding:
-    9px 16px;
-
-  border-radius:
-    999px;
-
-  background:
-    rgba(255,255,255,0.90);
-
-  color:
-    #755333;
-
-  font-size:
-    clamp(14px,1.4vw,19px);
-
-  font-weight:
-    700;
-
-  white-space:
-    nowrap;
-
-  box-shadow:
-    0 5px 16px
-    rgba(0,0,0,0.12);
-
-  opacity: 0;
-
-  transition:
-    opacity 0.5s ease;
-}
-
-
-.photo-hint.show {
-  opacity: 1;
-}
-
-
-/* =========================
+/* ========================
    ФИНАЛ
-========================= */
+======================== */
 
-.success {
-  position: absolute;
+.success{
+  position:absolute;
 
-  left: 50%;
-  top: 50%;
+  left:50%;
+  top:50%;
 
-  z-index: 60;
+  z-index:80;
 
   transform:
     translate(-50%,-50%)
-    scale(0.75);
+    scale(.8);
 
   padding:
-    18px 30px;
+    17px 28px;
 
-  border-radius:
-    20px;
+  border-radius:20px;
 
   background:
-    rgba(255,255,255,0.96);
+    rgba(255,255,255,.96);
 
-  color:
-    #704b28;
+  color:#704b28;
 
   font-size:
-    clamp(24px,3vw,40px);
+    clamp(23px,3vw,38px);
 
-  font-weight:
-    800;
+  font-weight:800;
 
   box-shadow:
-    0 14px 45px
-    rgba(0,0,0,0.24);
+    0 14px 42px
+    rgba(0,0,0,.22);
 
-  opacity: 0;
+  opacity:0;
 
-  pointer-events: none;
+  pointer-events:none;
 
   transition:
-    opacity 0.45s ease,
-    transform 0.45s ease;
+    opacity .4s ease,
+    transform .4s ease;
 }
 
-
-.success.show {
-  opacity: 1;
+.success.show{
+  opacity:1;
 
   transform:
     translate(-50%,-50%)
     scale(1);
 }
 
-
-/* =========================
-   МОБИЛЬНОЕ
-========================= */
-
-@media (max-width: 700px) {
-
-  .switch-wrap {
-    right: 16px;
+@media(max-width:700px){
+  .switch-wrap{
+    right:14px;
   }
 
-  .switch {
-    width: 60px;
-    height: 90px;
+  .photo-card{
+    width:86vw;
   }
 
-  .switch-button {
-    left: 14px;
-    top: 14px;
+  .tools{
+    left:14px;
+    bottom:16px;
 
-    width: 32px;
-    height: 62px;
+    transform:
+      scale(.85);
   }
-
-  .photo-card {
-    width: 86vw;
-  }
-
 }
 
 </style>
 </head>
 
-
 <body>
 
 <div class="game">
-
 
   <div
     class="instruction"
@@ -549,12 +623,10 @@ body {
     Включи свет 💡
   </div>
 
-
   <div
     class="darkness"
     id="darkness"
   ></div>
-
 
   <div
     class="switch-wrap"
@@ -565,71 +637,89 @@ body {
       Свет
     </div>
 
-
     <button
-      class="switch"
+      class="light-switch"
       id="lightSwitch"
-      aria-label="Включить свет"
     >
-
       <span
         class="switch-button"
       ></span>
-
     </button>
 
   </div>
-
 
   <div
     class="photo-card"
     id="photoCard"
   >
 
-    <div class="photo-area">
-
-      <!--
-        ВРЕМЕННАЯ КАРТИНКА.
-        Потом заменим на капибару.
-      -->
+    <div
+      class="photo-area"
+      id="photoArea"
+    >
 
       <img
-        class="photo"
         id="photo"
+        class="photo"
         src="https://picsum.photos/id/1025/1200/900"
         alt=""
         draggable="false"
       >
 
+      <canvas
+        id="liquidCanvas"
+      ></canvas>
 
       <div
         class="flash"
         id="flash"
       ></div>
 
+    </div>
+
+  </div>
+
+  <div
+    class="tools"
+    id="tools"
+  >
+
+    <div class="jar">
+      ПРОЯВИТЕЛЬ
+      <div class="jar-small">
+        фотораствор
+      </div>
+    </div>
+
+    <div
+      class="brush"
+      id="brush"
+    >
 
       <div
-        class="photo-hint"
-        id="photoHint"
-      >
-        Нажми на фотографию ✨
-      </div>
+        class="brush-bristles"
+      ></div>
+
+      <div
+        class="brush-metal"
+      ></div>
+
+      <div
+        class="brush-handle"
+      ></div>
 
     </div>
 
   </div>
 
-
   <div
     class="success"
     id="success"
   >
-    ✨ Фотография проявилась! ✨
+    ✨ Фотография готова! ✨
   </div>
 
-
 </div>
-
 
 <script>
 
@@ -648,9 +738,19 @@ const instruction =
     "instruction"
   );
 
+const switchWrap =
+  document.getElementById(
+    "switchWrap"
+  );
+
 const photoCard =
   document.getElementById(
     "photoCard"
+  );
+
+const photoArea =
+  document.getElementById(
+    "photoArea"
   );
 
 const photo =
@@ -658,10 +758,23 @@ const photo =
     "photo"
   );
 
-const photoHint =
+const tools =
   document.getElementById(
-    "photoHint"
+    "tools"
   );
+
+const brush =
+  document.getElementById(
+    "brush"
+  );
+
+const canvas =
+  document.getElementById(
+    "liquidCanvas"
+  );
+
+const ctx =
+  canvas.getContext("2d");
 
 const flash =
   document.getElementById(
@@ -674,42 +787,120 @@ const success =
   );
 
 
-let lightIsOn = false;
-let photoDeveloped = false;
+/* ==========================
+   ЭТАПЫ
+==========================
+
+   dark
+   brush
+   ready
+   developed
+
+========================== */
+
+let stage = "dark";
+
+let W = 1;
+let H = 1;
+let DPR = 1;
+
+
+/*
+  Сколько реальных движений кистью
+  нужно сделать.
+
+  Не нужно мазать всю фотографию.
+*/
+
+const REQUIRED_BRUSH_DISTANCE = 430;
+
+let brushedDistance = 0;
 
 
 /* ==========================
-   ВКЛЮЧАЕМ СВЕТ
+   CANVAS
+========================== */
+
+function resizeCanvas(){
+
+  const rect =
+    photoArea.getBoundingClientRect();
+
+  W = rect.width;
+  H = rect.height;
+
+  DPR =
+    Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
+
+  canvas.width =
+    Math.round(
+      W * DPR
+    );
+
+  canvas.height =
+    Math.round(
+      H * DPR
+    );
+
+  ctx.setTransform(
+    DPR,0,0,DPR,0,0
+  );
+}
+
+
+/* ==========================
+   ИНСТРУКЦИЯ
+========================== */
+
+function changeInstruction(text){
+
+  instruction.classList.add(
+    "hide"
+  );
+
+  setTimeout(
+    () => {
+
+      instruction.textContent =
+        text;
+
+      instruction.classList.remove(
+        "hide"
+      );
+
+    },
+    300
+  );
+}
+
+
+/* ==========================
+   СВЕТ
 ========================== */
 
 lightSwitch.addEventListener(
   "click",
   () => {
 
-    if (lightIsOn) return;
+    if(stage !== "dark") return;
 
-    lightIsOn = true;
-
+    stage = "brush";
 
     lightSwitch.classList.add(
       "on"
     );
 
-
     darkness.classList.add(
-      "light-on"
+      "off"
     );
-
 
     instruction.classList.add(
       "hide"
     );
 
-
-    /*
-      Фотография появляется
-      немного позже света.
-    */
 
     setTimeout(
       () => {
@@ -719,29 +910,34 @@ lightSwitch.addEventListener(
         );
 
       },
-      550
+      450
     );
 
-
-    /*
-      Затем появляется новая подсказка.
-    */
 
     setTimeout(
       () => {
 
-        instruction.textContent =
-          "Теперь прояви фотографию 📸";
-
-
-        instruction.classList.remove(
-          "hide"
-        );
-
-
-        photoHint.classList.add(
+        tools.classList.add(
           "show"
         );
+
+        tools.style.pointerEvents =
+          "auto";
+
+        changeInstruction(
+          "Нанеси проявитель на фотографию кисточкой 🖌️"
+        );
+
+      },
+      1100
+    );
+
+
+    setTimeout(
+      () => {
+
+        switchWrap.style.opacity =
+          ".35";
 
       },
       1300
@@ -752,43 +948,390 @@ lightSwitch.addEventListener(
 
 
 /* ==========================
-   ПРОЯВЛЯЕМ ФОТОГРАФИЮ
+   КИСТОЧКА
+========================== */
+
+let dragging = false;
+
+let brushX = 0;
+let brushY = 0;
+
+let previousX = null;
+let previousY = null;
+
+
+/*
+  Запоминаем исходное положение,
+  чтобы потом кисть можно было вернуть.
+*/
+
+let homeLeft = 0;
+let homeTop = 0;
+
+
+function localPhotoPosition(
+  clientX,
+  clientY
+){
+
+  const rect =
+    photoArea.getBoundingClientRect();
+
+  return {
+    x:
+      clientX -
+      rect.left,
+
+    y:
+      clientY -
+      rect.top,
+
+    inside:
+      clientX >= rect.left &&
+      clientX <= rect.right &&
+      clientY >= rect.top &&
+      clientY <= rect.bottom
+  };
+}
+
+
+/* ==========================
+   РИСУЕМ ЖИДКОСТЬ
+========================== */
+
+function paintLiquid(x,y){
+
+  /*
+    Не краска.
+
+    Очень лёгкий влажный
+    янтарно-золотистый блеск.
+  */
+
+  const radius = 34;
+
+  const gradient =
+    ctx.createRadialGradient(
+      x,
+      y,
+      0,
+
+      x,
+      y,
+      radius
+    );
+
+  gradient.addColorStop(
+    0,
+    "rgba(255,236,174,.24)"
+  );
+
+  gradient.addColorStop(
+    .40,
+    "rgba(239,194,104,.16)"
+  );
+
+  gradient.addColorStop(
+    .78,
+    "rgba(255,245,214,.08)"
+  );
+
+  gradient.addColorStop(
+    1,
+    "rgba(255,255,255,0)"
+  );
+
+
+  ctx.fillStyle =
+    gradient;
+
+  ctx.beginPath();
+
+  ctx.arc(
+    x,
+    y,
+    radius,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+
+  /*
+    Маленький световой блик —
+    эффект влажной поверхности.
+  */
+
+  ctx.fillStyle =
+    "rgba(255,255,255,.12)";
+
+  ctx.beginPath();
+
+  ctx.ellipse(
+    x - 8,
+    y - 8,
+    14,
+    4,
+    -.4,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+}
+
+
+/* ==========================
+   НАЧАЛО DRAG
+========================== */
+
+brush.addEventListener(
+  "pointerdown",
+  e => {
+
+    if(stage !== "brush") return;
+
+    e.preventDefault();
+
+    dragging = true;
+
+    brush.setPointerCapture(
+      e.pointerId
+    );
+
+    const rect =
+      brush.getBoundingClientRect();
+
+    homeLeft =
+      brush.offsetLeft;
+
+    homeTop =
+      brush.offsetTop;
+
+    previousX =
+      e.clientX;
+
+    previousY =
+      e.clientY;
+
+    brush.style.position =
+      "fixed";
+
+    brush.style.left =
+      rect.left + "px";
+
+    brush.style.top =
+      rect.top + "px";
+
+    brush.style.zIndex =
+      "100";
+
+  }
+);
+
+
+/* ==========================
+   ДВИГАЕМ КИСТЬ
+========================== */
+
+brush.addEventListener(
+  "pointermove",
+  e => {
+
+    if(
+      !dragging ||
+      stage !== "brush"
+    ) return;
+
+
+    const rect =
+      brush.getBoundingClientRect();
+
+
+    const newLeft =
+      e.clientX -
+      rect.width * .48;
+
+    const newTop =
+      e.clientY -
+      rect.height * .48;
+
+
+    brush.style.left =
+      newLeft + "px";
+
+    brush.style.top =
+      newTop + "px";
+
+
+    const p =
+      localPhotoPosition(
+        e.clientX,
+        e.clientY
+      );
+
+
+    if(p.inside){
+
+      paintLiquid(
+        p.x,
+        p.y
+      );
+
+
+      if(
+        previousX !== null
+      ){
+
+        const dx =
+          e.clientX -
+          previousX;
+
+        const dy =
+          e.clientY -
+          previousY;
+
+        brushedDistance +=
+          Math.sqrt(
+            dx*dx +
+            dy*dy
+          );
+
+      }
+
+
+      if(
+        brushedDistance >=
+        REQUIRED_BRUSH_DISTANCE
+      ){
+
+        finishBrushStage();
+
+      }
+
+    }
+
+
+    previousX =
+      e.clientX;
+
+    previousY =
+      e.clientY;
+
+  }
+);
+
+
+/* ==========================
+   ОТПУСТИЛИ КИСТЬ
+========================== */
+
+brush.addEventListener(
+  "pointerup",
+  () => {
+
+    dragging = false;
+
+    previousX = null;
+    previousY = null;
+
+  }
+);
+
+
+brush.addEventListener(
+  "pointercancel",
+  () => {
+
+    dragging = false;
+
+    previousX = null;
+    previousY = null;
+
+  }
+);
+
+
+/* ==========================
+   ПРОЯВИТЕЛЬ НАНЕСЁН
+========================== */
+
+function finishBrushStage(){
+
+  if(stage !== "brush") return;
+
+  stage = "ready";
+
+  dragging = false;
+
+  brush.style.opacity =
+    ".35";
+
+  brush.style.pointerEvents =
+    "none";
+
+
+  changeInstruction(
+    "Готово! Теперь нажми на фотографию 📸"
+  );
+
+
+  /*
+    Жидкость чуть-чуть
+    равномерно растекается.
+  */
+
+  canvas.style.transition =
+    "filter .8s ease";
+
+  canvas.style.filter =
+    "blur(2px)";
+
+}
+
+
+/* ==========================
+   ПРОЯВЛЕНИЕ
 ========================== */
 
 photoCard.addEventListener(
   "click",
   () => {
 
-    if (
-      !lightIsOn ||
-      photoDeveloped
-    ) return;
+    if(stage !== "ready") return;
 
-
-    photoDeveloped = true;
-
-
-    photoHint.classList.remove(
-      "show"
-    );
-
+    stage = "developed";
 
     instruction.classList.add(
       "hide"
     );
 
+    tools.classList.remove(
+      "show"
+    );
+
 
     /*
-      Мягкая вспышка.
+      Следы проявителя растворяются.
+    */
+
+    canvas.style.transition =
+      "opacity 1.4s ease";
+
+    canvas.style.opacity =
+      "0";
+
+
+    /*
+      Небольшая вспышка.
     */
 
     flash.classList.remove(
       "active"
     );
 
-
     void flash.offsetWidth;
-
 
     flash.classList.add(
       "active"
@@ -796,21 +1339,13 @@ photoCard.addEventListener(
 
 
     /*
-      Фотография плавно получает:
-      цвет,
-      резкость,
-      контраст.
+      Снимок проявляется.
     */
 
     photo.classList.add(
       "developed"
     );
 
-
-    /*
-      Финальная надпись появляется
-      после завершения проявления.
-    */
 
     setTimeout(
       () => {
@@ -832,11 +1367,30 @@ photoCard.addEventListener(
         );
 
       },
-      3900
+      3800
     );
 
   }
 );
+
+
+/* ==========================
+   START
+========================== */
+
+window.addEventListener(
+  "load",
+  resizeCanvas
+);
+
+
+if(window.ResizeObserver){
+
+  new ResizeObserver(
+    resizeCanvas
+  ).observe(photoArea);
+
+}
 
 </script>
 
