@@ -36,10 +36,8 @@ body{
 
 .game{
   position:relative;
-
   width:100vw;
   height:100vh;
-
   overflow:hidden;
 
   background-image:url("Fon.PNG");
@@ -59,13 +57,11 @@ body{
 
   z-index:80;
 
-  background:
-    rgba(6,7,9,0.92);
+  background:rgba(6,7,9,0.92);
 
   pointer-events:none;
 
-  transition:
-    opacity 1.25s ease;
+  transition:opacity 1.25s ease;
 }
 
 .darkness.off{
@@ -85,23 +81,19 @@ body{
 
   z-index:140;
 
-  transform:
-    translateX(-50%);
+  transform:translateX(-50%);
 
   max-width:min(80vw,760px);
 
-  padding:
-    13px 24px;
+  padding:13px 24px;
 
   border-radius:20px;
 
-  background:
-    rgba(255,250,239,0.95);
+  background:rgba(255,250,239,0.95);
 
   color:#5d4029;
 
-  font-size:
-    clamp(17px,1.9vw,27px);
+  font-size:clamp(17px,1.9vw,27px);
 
   font-weight:800;
 
@@ -137,8 +129,7 @@ body{
 
   z-index:150;
 
-  transform:
-    translateY(-50%);
+  transform:translateY(-50%);
 
   display:flex;
   flex-direction:column;
@@ -146,13 +137,11 @@ body{
 
   gap:8px;
 
-  transition:
-    opacity .45s ease;
+  transition:opacity .45s ease;
 }
 
 .switch-label{
   color:#fff;
-
   font-size:15px;
 
   text-shadow:
@@ -175,10 +164,8 @@ body{
   cursor:pointer;
 
   box-shadow:
-    0 8px 22px
-    rgba(0,0,0,.42),
-    inset 0 0 0 2px
-    rgba(90,80,65,.12);
+    0 8px 22px rgba(0,0,0,.42),
+    inset 0 0 0 2px rgba(90,80,65,.12);
 }
 
 .switch-button{
@@ -209,8 +196,7 @@ body{
 }
 
 .light-switch.on .switch-button{
-  transform:
-    translateY(12px);
+  transform:translateY(12px);
 
   background:
     linear-gradient(
@@ -306,8 +292,7 @@ body{
 
   opacity:.66;
 
-  transform:
-    scale(1.025);
+  transform:scale(1.025);
 
   transition:
     filter 2.1s cubic-bezier(.22,.8,.3,1),
@@ -326,8 +311,7 @@ body{
 
   opacity:1;
 
-  transform:
-    scale(1);
+  transform:scale(1);
 }
 
 
@@ -347,7 +331,8 @@ body{
   pointer-events:none;
 
   transition:
-    opacity 1.2s ease;
+    opacity 1.2s ease,
+    filter .8s ease;
 }
 
 
@@ -366,7 +351,6 @@ body{
   width:clamp(110px,13vw,190px);
 
   user-select:none;
-
   pointer-events:none;
 
   filter:
@@ -377,8 +361,7 @@ body{
 
   opacity:0;
 
-  transform:
-    translateY(16px);
+  transform:translateY(16px);
 
   transition:
     opacity .45s ease,
@@ -387,9 +370,7 @@ body{
 
 .developer.show{
   opacity:1;
-
-  transform:
-    translateY(0);
+  transform:translateY(0);
 }
 
 
@@ -400,8 +381,10 @@ body{
 .brush{
   position:absolute;
 
-  left:15%;
-  bottom:5%;
+  right:4%;
+  left:auto;
+
+  bottom:6%;
 
   z-index:200;
 
@@ -421,8 +404,7 @@ body{
 
   opacity:0;
 
-  transform:
-    rotate(-18deg);
+  transform:rotate(-18deg);
 
   transition:
     opacity .4s ease;
@@ -439,7 +421,7 @@ body{
 
 
 /* =========================
-   ВОДЯНЫЕ КАПЛИ
+   КАПЛИ
 ========================= */
 
 .drop{
@@ -450,28 +432,24 @@ body{
 
   z-index:190;
 
-  border-radius:
-    50% 50% 55% 55%;
+  border-radius:50% 50% 55% 55%;
 
-  background:
-    rgba(220,245,255,.75);
+  background:rgba(220,245,255,.75);
 
   box-shadow:
-    inset 0 0 5px
-    rgba(255,255,255,.9),
-    0 2px 4px
-    rgba(70,100,110,.15);
+    inset 0 0 5px rgba(255,255,255,.9),
+    0 2px 4px rgba(70,100,110,.15);
 
   pointer-events:none;
 
-  animation:
-    dropFall .7s ease forwards;
+  animation:dropFall .7s ease forwards;
 }
 
 @keyframes dropFall{
 
   0%{
     opacity:0;
+
     transform:
       translateY(-4px)
       scale(.7);
@@ -483,6 +461,7 @@ body{
 
   100%{
     opacity:0;
+
     transform:
       translateY(25px)
       scale(.9);
@@ -492,7 +471,7 @@ body{
 
 
 /* =========================
-   КНОПКА СЛЕДУЮЩАЯ
+   КНОПКА ДАЛЬШЕ
 ========================= */
 
 .next-button{
@@ -507,20 +486,17 @@ body{
     translateX(-50%)
     translateY(10px);
 
-  padding:
-    13px 25px;
+  padding:13px 25px;
 
   border:0;
 
   border-radius:999px;
 
-  background:
-    rgba(255,250,239,.97);
+  background:rgba(255,250,239,.97);
 
   color:#5e412a;
 
-  font-size:
-    clamp(16px,1.5vw,21px);
+  font-size:clamp(16px,1.5vw,21px);
 
   font-weight:800;
 
@@ -566,18 +542,15 @@ body{
     translate(-50%,-50%)
     scale(.8);
 
-  padding:
-    18px 30px;
+  padding:18px 30px;
 
   border-radius:20px;
 
-  background:
-    rgba(255,250,239,.97);
+  background:rgba(255,250,239,.97);
 
   color:#624226;
 
-  font-size:
-    clamp(22px,2.7vw,38px);
+  font-size:clamp(22px,2.7vw,38px);
 
   font-weight:800;
 
@@ -618,7 +591,7 @@ body{
   }
 
   .brush{
-    left:11%;
+    right:2%;
   }
 
   .switch-wrap{
@@ -633,10 +606,8 @@ body{
 
 <body>
 
-<div
-  class="game"
-  id="game"
->
+<div class="game" id="game">
+
 
   <div
     class="instruction"
@@ -838,6 +809,7 @@ let W = 1;
 let H = 1;
 let DPR = 1;
 
+
 function resizeCanvas(){
 
   const rect =
@@ -900,11 +872,17 @@ lightSwitch.addEventListener(
 
     if(stage !== "dark") return;
 
-    lightSwitch.classList.add("on");
+    lightSwitch.classList.add(
+      "on"
+    );
 
-    darkness.classList.add("off");
+    darkness.classList.add(
+      "off"
+    );
 
-    instruction.classList.add("hide");
+    instruction.classList.add(
+      "hide"
+    );
 
     setTimeout(
       () => {
@@ -928,8 +906,11 @@ lightSwitch.addEventListener(
           "show"
         );
 
-        switchWrap.style.opacity = "0";
-        switchWrap.style.pointerEvents = "none";
+        switchWrap.style.opacity =
+          "0";
+
+        switchWrap.style.pointerEvents =
+          "none";
 
         beginDipStage();
 
@@ -953,7 +934,11 @@ function beginDipStage(){
 
   wetStart = null;
 
-  canvas.style.opacity = "1";
+  canvas.style.opacity =
+    "1";
+
+  canvas.style.filter =
+    "none";
 
   ctx.clearRect(
     0,
@@ -966,11 +951,34 @@ function beginDipStage(){
     "developed"
   );
 
-  brush.style.pointerEvents =
+  /*
+    Кисточка снова появляется
+    справа от фотографии.
+  */
+
+  brush.style.position =
+    "absolute";
+
+  brush.style.left =
     "auto";
+
+  brush.style.top =
+    "auto";
+
+  brush.style.right =
+    "4%";
+
+  brush.style.bottom =
+    "6%";
 
   brush.style.opacity =
     "1";
+
+  brush.style.pointerEvents =
+    "auto";
+
+  brush.style.transform =
+    "rotate(-18deg)";
 
   nextButton.classList.remove(
     "show"
@@ -1020,6 +1028,12 @@ brush.addEventListener(
 
     brush.style.position =
       "fixed";
+
+    brush.style.right =
+      "auto";
+
+    brush.style.bottom =
+      "auto";
 
     brush.style.left =
       rect.left + "px";
@@ -1108,7 +1122,7 @@ brush.addEventListener(
 
 
 /* =========================
-   ПРОВЕРКА МАКАНИЯ
+   КОНЧИК КИСТИ
 ========================= */
 
 function getBrushTip(){
@@ -1117,9 +1131,8 @@ function getBrushTip(){
     brush.getBoundingClientRect();
 
   /*
-    Кисть на PNG расположена по диагонали.
-    Щетина находится ближе
-    к левому нижнему краю.
+    Щетина у PNG находится
+    ближе к левому нижнему краю.
   */
 
   return{
@@ -1136,6 +1149,10 @@ function getBrushTip(){
 }
 
 
+/* =========================
+   МАКАНИЕ В БАНКУ
+========================= */
+
 function checkDip(){
 
   const tip =
@@ -1144,12 +1161,6 @@ function checkDip(){
   const jar =
     developer.getBoundingClientRect();
 
-
-  /*
-    Считаем, что кисть окунулась,
-    если щетина попала
-    в верхнюю часть банки.
-  */
 
   const inside =
 
@@ -1247,7 +1258,7 @@ function createDrops(x,y){
 
 
 /* =========================
-   РИСУЕМ ВОДУ
+   РИСУЕМ РАСТВОР
 ========================= */
 
 function paintPhoto(){
@@ -1334,16 +1345,10 @@ function paintPhoto(){
   ctx.fill();
 
 
-  /*
-    Пока просто считаем,
-    что около 2 секунд
-    работы кистью достаточно.
-
-    Механику растекания
-    потом отдельно улучшим.
-  */
-
-  if(wetStart === null){
+  if(
+    wetStart ===
+    null
+  ){
 
     wetStart =
       performance.now();
@@ -1365,7 +1370,7 @@ function paintPhoto(){
 
 
 /* =========================
-   ПОКА ПРОСТОЙ ФИНИШ КИСТИ
+   ДОСТАТОЧНО РАСТВОРА
 ========================= */
 
 function finishBrushing(){
@@ -1379,18 +1384,35 @@ function finishBrushing(){
   stage =
     "ready";
 
+  dragging =
+    false;
+
+
+  /*
+    Кисть теперь больше не нужна.
+    Она плавно исчезает.
+  */
 
   brush.style.pointerEvents =
     "none";
 
-  brush.style.opacity =
-    ".45";
+  setTimeout(
+    () => {
+
+      brush.style.opacity =
+        "0";
+
+    },
+    120
+  );
 
 
   /*
-    Пока простая лёгкая водяная
-    плёнка поверх всей фотографии.
-    Именно её потом будем переделывать.
+    Пока оставляем простой
+    водяной слой.
+
+    Растекание потом отдельно
+    будем улучшать.
   */
 
   ctx.fillStyle =
@@ -1404,8 +1426,15 @@ function finishBrushing(){
   );
 
 
-  changeInstruction(
-    "Готово! Нажми на фотографию 📸"
+  setTimeout(
+    () => {
+
+      changeInstruction(
+        "Готово! Нажми на фотографию 📸"
+      );
+
+    },
+    300
   );
 
 }
@@ -1419,17 +1448,24 @@ photoCard.addEventListener(
   "click",
   () => {
 
-    if(stage !== "ready") return;
+    if(
+      stage !==
+      "ready"
+    ) return;
+
 
     stage =
       "developed";
+
 
     instruction.classList.add(
       "hide"
     );
 
+
     canvas.style.opacity =
       "0";
+
 
     photo.classList.add(
       "developed"
@@ -1474,6 +1510,7 @@ nextButton.addEventListener(
 
     e.stopPropagation();
 
+
     if(
       currentPhoto >=
       photos.length - 1
@@ -1484,9 +1521,11 @@ nextButton.addEventListener(
       "show"
     );
 
+
     instruction.classList.add(
       "hide"
     );
+
 
     photoCard.style.opacity =
       "0";
@@ -1497,15 +1536,24 @@ nextButton.addEventListener(
 
         currentPhoto++;
 
+
         photo.src =
-          photos[currentPhoto];
+          photos[
+            currentPhoto
+          ];
+
 
         photo.classList.remove(
           "developed"
         );
 
+
         canvas.style.opacity =
           "1";
+
+        canvas.style.filter =
+          "none";
+
 
         ctx.clearRect(
           0,
@@ -1514,19 +1562,10 @@ nextButton.addEventListener(
           H
         );
 
+
         photoCard.style.opacity =
           "1";
 
-        /*
-          Кисть снова активна.
-          Банка остаётся на месте.
-        */
-
-        brush.style.pointerEvents =
-          "auto";
-
-        brush.style.opacity =
-          "1";
 
         beginDipStage();
 
@@ -1548,6 +1587,7 @@ window.addEventListener(
 
     resizeCanvas();
 
+
     photos.forEach(
       src => {
 
@@ -1564,7 +1604,9 @@ window.addEventListener(
 );
 
 
-if(window.ResizeObserver){
+if(
+  window.ResizeObserver
+){
 
   new ResizeObserver(
     resizeCanvas
