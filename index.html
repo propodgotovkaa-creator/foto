@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
 
-<title>Прояви фотографию</title>
+<title>Фотостудия капибары</title>
 
 <style>
-
 * {
   box-sizing: border-box;
 }
@@ -27,109 +25,261 @@ body {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-
-  background:
-    radial-gradient(
-      circle at 50% 15%,
-      #fffaf0 0%,
-      #f4e3c9 55%,
-      #e2c6a1 100%
-    );
 }
 
 
-/* ==========================
-   ИГРА
-========================== */
+/* =========================
+   ВСЯ ИГРА
+========================= */
 
 .game {
+  position: relative;
   width: 100vw;
   height: 100vh;
 
   display: flex;
-  flex-direction: column;
-
   align-items: center;
   justify-content: center;
 
-  gap: 18px;
+  overflow: hidden;
 
-  padding: 24px;
+  background:
+    radial-gradient(
+      circle at 50% 30%,
+      #fff8e9 0%,
+      #f1dcc0 55%,
+      #d7b68c 100%
+    );
 }
 
 
-/* ==========================
-   ИНСТРУКЦИЯ
-========================== */
+/* =========================
+   ЗАТЕМНЕНИЕ
+========================= */
 
-.instruction {
-  text-align: center;
+.darkness {
+  position: absolute;
+  inset: 0;
 
-  color: #765336;
+  z-index: 20;
+
+  background:
+    rgba(9, 11, 15, 0.93);
 
   transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
+    opacity 1.5s ease;
+
+  pointer-events: none;
+}
+
+.darkness.light-on {
+  opacity: 0;
+}
+
+
+/* =========================
+   ИНСТРУКЦИЯ
+========================= */
+
+.instruction {
+  position: absolute;
+  top: 35px;
+  left: 50%;
+
+  z-index: 40;
+
+  transform:
+    translateX(-50%);
+
+  padding:
+    12px 22px;
+
+  border-radius: 18px;
+
+  background:
+    rgba(255,255,255,0.92);
+
+  color:
+    #6f5036;
+
+  font-size:
+    clamp(18px, 2vw, 28px);
+
+  font-weight: 700;
+
+  text-align: center;
+
+  box-shadow:
+    0 8px 26px
+    rgba(0,0,0,0.18);
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
 }
 
 .instruction.hide {
   opacity: 0;
 
   transform:
+    translateX(-50%)
     translateY(-10px);
+
+  pointer-events: none;
 }
 
 
-.title {
-  font-size: clamp(
-    26px,
-    4vw,
-    48px
-  );
+/* =========================
+   ВЫКЛЮЧАТЕЛЬ
+========================= */
 
-  font-weight: 800;
+.switch-wrap {
+  position: absolute;
+
+  right: 45px;
+  top: 50%;
+
+  z-index: 50;
+
+  transform:
+    translateY(-50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 10px;
 }
 
 
-.subtitle {
-  margin-top: 6px;
+.switch-label {
+  color: white;
 
-  font-size: clamp(
-    15px,
-    1.6vw,
-    21px
-  );
+  font-size: 15px;
 
-  opacity: 0.72;
+  text-shadow:
+    0 2px 5px
+    rgba(0,0,0,0.7);
 }
 
 
-/* ==========================
-   ФОТО
-========================== */
-
-.photo-frame {
+.switch {
   position: relative;
 
-  width: min(
-    78vw,
-    850px
-  );
+  width: 74px;
+  height: 112px;
 
-  aspect-ratio: 4 / 3;
+  border: 0;
 
-  padding:
-    14px
-    14px
-    48px;
+  border-radius: 12px;
 
-  background: #ffffff;
-
-  border-radius: 8px;
+  background:
+    #eee8dd;
 
   box-shadow:
-    0 24px 60px
-    rgba(91, 57, 28, 0.25);
+    0 7px 20px
+    rgba(0,0,0,0.42),
+    inset 0 0 0 2px
+    rgba(80,70,60,0.15);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease;
+}
+
+.switch:active {
+  transform:
+    scale(0.96);
+}
+
+
+.switch-button {
+  position: absolute;
+
+  left: 17px;
+  top: 17px;
+
+  width: 40px;
+  height: 78px;
+
+  border-radius: 6px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #faf7ef,
+      #cfc8bb
+    );
+
+  box-shadow:
+    0 4px 8px
+    rgba(0,0,0,0.30);
+
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease;
+}
+
+
+.switch.on .switch-button {
+  transform:
+    translateY(12px);
+
+  background:
+    linear-gradient(
+      180deg,
+      #ffe49e,
+      #e8bd54
+    );
+}
+
+
+/* =========================
+   ФОТОГРАФИЯ
+========================= */
+
+.photo-card {
+  position: relative;
+
+  width:
+    min(70vw, 820px);
+
+  aspect-ratio:
+    4 / 3;
+
+  padding:
+    14px 14px 48px;
+
+  background:
+    #fff;
+
+  border-radius:
+    10px;
+
+  box-shadow:
+    0 25px 65px
+    rgba(76,49,23,0.27);
+
+  transform:
+    rotate(-0.6deg);
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+
+
+.photo-card.visible {
+  opacity: 1;
+
+  transform:
+    rotate(-0.6deg)
+    scale(1);
 }
 
 
@@ -141,178 +291,199 @@ body {
 
   overflow: hidden;
 
-  background: #e5d4bc;
+  border-radius:
+    4px;
 
-  border-radius: 3px;
-
-  touch-action: none;
+  background:
+    #eee2d3;
 }
 
 
-/* Временная фотография */
-
 .photo {
-  position: absolute;
-
-  inset: 0;
-
   width: 100%;
   height: 100%;
+
+  display: block;
 
   object-fit: cover;
 
+  user-select: none;
+
   pointer-events: none;
 
-  user-select: none;
+  /* НЕПРОЯВЛЕННОЕ состояние */
+
+  filter:
+    grayscale(0.75)
+    sepia(0.35)
+    blur(9px)
+    brightness(1.45)
+    contrast(0.68)
+    saturate(0.35);
+
+  opacity:
+    0.62;
+
+  transform:
+    scale(1.035);
+
+  transition:
+    filter 2.2s cubic-bezier(.22,.8,.3,1),
+    opacity 2.2s ease,
+    transform 2.2s cubic-bezier(.22,.8,.3,1);
 }
 
 
-/* Слой проявления */
+/* ПРОЯВИЛАСЬ */
 
-#mask {
+.photo.developed {
+  filter:
+    grayscale(0)
+    sepia(0)
+    blur(0)
+    brightness(1)
+    contrast(1)
+    saturate(1);
+
+  opacity: 1;
+
+  transform:
+    scale(1);
+}
+
+
+/* =========================
+   БЕЛАЯ ВСПЫШКА
+========================= */
+
+.flash {
   position: absolute;
-
   inset: 0;
 
-  width: 100%;
-  height: 100%;
+  z-index: 12;
 
-  cursor: none;
+  background:
+    rgba(255,249,218,0);
 
-  touch-action: none;
+  pointer-events: none;
 }
 
 
-/* ==========================
-   КИСТЬ
-========================== */
+.flash.active {
+  animation:
+    flash 0.8s ease;
+}
 
-.brush {
+
+@keyframes flash {
+
+  0% {
+    background:
+      rgba(255,250,220,0);
+  }
+
+  35% {
+    background:
+      rgba(255,250,220,0.75);
+  }
+
+  100% {
+    background:
+      rgba(255,250,220,0);
+  }
+
+}
+
+
+/* =========================
+   ПОДСКАЗКА НА ФОТО
+========================= */
+
+.photo-hint {
   position: absolute;
 
-  width: 54px;
-  height: 54px;
+  left: 50%;
+  bottom: 15px;
 
-  border-radius: 50%;
+  z-index: 10;
 
-  pointer-events: none;
+  transform:
+    translateX(-50%);
 
-  z-index: 5;
+  padding:
+    9px 16px;
+
+  border-radius:
+    999px;
+
+  background:
+    rgba(255,255,255,0.90);
+
+  color:
+    #755333;
+
+  font-size:
+    clamp(14px,1.4vw,19px);
+
+  font-weight:
+    700;
+
+  white-space:
+    nowrap;
+
+  box-shadow:
+    0 5px 16px
+    rgba(0,0,0,0.12);
 
   opacity: 0;
 
-  transform:
-    translate(-50%, -50%);
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255,255,220,0.95) 0%,
-      rgba(255,222,135,0.55) 28%,
-      rgba(255,202,90,0.18) 58%,
-      rgba(255,202,90,0) 75%
-    );
-
-  box-shadow:
-    0 0 22px
-    rgba(255,205,105,0.65);
-
   transition:
-    opacity 0.12s ease;
+    opacity 0.5s ease;
 }
 
 
-/* ==========================
-   ПРОГРЕСС
-========================== */
-
-.progress-box {
-  width: min(
-    52vw,
-    500px
-  );
-
-  text-align: center;
-
-  color: #765336;
+.photo-hint.show {
+  opacity: 1;
 }
 
 
-.progress-text {
-  margin-bottom: 6px;
-
-  font-size: 14px;
-}
-
-
-.progress-track {
-  width: 100%;
-  height: 9px;
-
-  overflow: hidden;
-
-  border-radius: 999px;
-
-  background:
-    rgba(255,255,255,0.58);
-}
-
-
-.progress-fill {
-  width: 0%;
-  height: 100%;
-
-  border-radius: inherit;
-
-  background:
-    linear-gradient(
-      90deg,
-      #f2c871,
-      #e7a84d
-    );
-
-  transition:
-    width 0.25s ease;
-}
-
-
-/* ==========================
+/* =========================
    ФИНАЛ
-========================== */
+========================= */
 
 .success {
-  position: fixed;
+  position: absolute;
 
   left: 50%;
   top: 50%;
 
-  z-index: 50;
+  z-index: 60;
 
   transform:
-    translate(-50%, -50%)
+    translate(-50%,-50%)
     scale(0.75);
 
   padding:
     18px 30px;
 
-  border-radius: 20px;
+  border-radius:
+    20px;
 
   background:
     rgba(255,255,255,0.96);
 
-  color: #76502e;
+  color:
+    #704b28;
 
-  font-size: clamp(
-    23px,
-    3vw,
-    38px
-  );
+  font-size:
+    clamp(24px,3vw,40px);
 
-  font-weight: 800;
+  font-weight:
+    800;
 
   box-shadow:
-    0 15px 45px
-    rgba(80,50,20,0.25);
+    0 14px 45px
+    rgba(0,0,0,0.24);
 
   opacity: 0;
 
@@ -328,8 +499,38 @@ body {
   opacity: 1;
 
   transform:
-    translate(-50%, -50%)
+    translate(-50%,-50%)
     scale(1);
+}
+
+
+/* =========================
+   МОБИЛЬНОЕ
+========================= */
+
+@media (max-width: 700px) {
+
+  .switch-wrap {
+    right: 16px;
+  }
+
+  .switch {
+    width: 60px;
+    height: 90px;
+  }
+
+  .switch-button {
+    left: 14px;
+    top: 14px;
+
+    width: 32px;
+    height: 62px;
+  }
+
+  .photo-card {
+    width: 86vw;
+  }
+
 }
 
 </style>
@@ -340,45 +541,79 @@ body {
 
 <div class="game">
 
+
   <div
     class="instruction"
     id="instruction"
   >
+    Включи свет 💡
+  </div>
 
-    <div class="title">
-      Прояви фотографию! ✨
+
+  <div
+    class="darkness"
+    id="darkness"
+  ></div>
+
+
+  <div
+    class="switch-wrap"
+    id="switchWrap"
+  >
+
+    <div class="switch-label">
+      Свет
     </div>
 
-    <div class="subtitle">
-      Проводи кисточкой по снимку
-    </div>
+
+    <button
+      class="switch"
+      id="lightSwitch"
+      aria-label="Включить свет"
+    >
+
+      <span
+        class="switch-button"
+      ></span>
+
+    </button>
 
   </div>
 
 
-  <div class="photo-frame">
+  <div
+    class="photo-card"
+    id="photoCard"
+  >
 
-    <div class="photo-area" id="photoArea">
+    <div class="photo-area">
 
       <!--
-        ПОКА ВРЕМЕННАЯ ФОТОГРАФИЯ.
-        Потом сюда поставим капибару.
+        ВРЕМЕННАЯ КАРТИНКА.
+        Потом заменим на капибару.
       -->
 
       <img
         class="photo"
+        id="photo"
         src="https://picsum.photos/id/1025/1200/900"
         alt=""
         draggable="false"
       >
 
 
-      <canvas id="mask"></canvas>
+      <div
+        class="flash"
+        id="flash"
+      ></div>
+
 
       <div
-        class="brush"
-        id="brush"
-      ></div>
+        class="photo-hint"
+        id="photoHint"
+      >
+        Нажми на фотографию ✨
+      </div>
 
     </div>
 
@@ -386,80 +621,52 @@ body {
 
 
   <div
-    class="progress-box"
-    id="progressBox"
+    class="success"
+    id="success"
   >
-
-    <div class="progress-text">
-      Фотография проявляется...
-    </div>
-
-    <div class="progress-track">
-
-      <div
-        class="progress-fill"
-        id="progressFill"
-      ></div>
-
-    </div>
-
+    ✨ Фотография проявилась! ✨
   </div>
 
+
 </div>
-
-
-<div
-  class="success"
-  id="success"
->
-  ✨ Фотография готова! ✨
-</div>
-
 
 
 <script>
 
-const canvas =
-  document.getElementById("mask");
-
-const ctx =
-  canvas.getContext(
-    "2d",
-    {
-      willReadFrequently: true
-    }
-  );
-
-
-const area =
+const lightSwitch =
   document.getElementById(
-    "photoArea"
+    "lightSwitch"
   );
 
-
-const brush =
+const darkness =
   document.getElementById(
-    "brush"
+    "darkness"
   );
-
 
 const instruction =
   document.getElementById(
     "instruction"
   );
 
-
-const progressFill =
+const photoCard =
   document.getElementById(
-    "progressFill"
+    "photoCard"
   );
 
-
-const progressBox =
+const photo =
   document.getElementById(
-    "progressBox"
+    "photo"
   );
 
+const photoHint =
+  document.getElementById(
+    "photoHint"
+  );
+
+const flash =
+  document.getElementById(
+    "flash"
+  );
 
 const success =
   document.getElementById(
@@ -467,757 +674,169 @@ const success =
   );
 
 
-
-/* ==========================
-   НАСТРОЙКИ
-========================== */
-
-
-/*
-  Радиус небольшой.
-
-  Одним взмахом половина фотографии
-  не проявится.
-*/
-
-const BRUSH_RADIUS = 32;
-
-
-/*
-  Сила одного прохода.
-
-  0.22 означает:
-  фотография проявляется
-  ПОСТЕПЕННО.
-
-  Провела второй раз —
-  стало ярче.
-*/
-
-const BRUSH_POWER = 0.22;
-
-
-/*
-  Когда фотография считается
-  практически готовой.
-*/
-
-const FINISH_PERCENT = 72;
-
-
-
-let W = 1;
-let H = 1;
-
-let DPR = 1;
-
-let drawing = false;
-
-let lastX = null;
-let lastY = null;
-
-let started = false;
-let finished = false;
-
-let lastProgressCheck = 0;
-
+let lightIsOn = false;
+let photoDeveloped = false;
 
 
 /* ==========================
-   РАЗМЕР
+   ВКЛЮЧАЕМ СВЕТ
 ========================== */
 
-function resize() {
+lightSwitch.addEventListener(
+  "click",
+  () => {
 
-  const rect =
-    area.getBoundingClientRect();
+    if (lightIsOn) return;
+
+    lightIsOn = true;
 
 
-  W = rect.width;
-  H = rect.height;
-
-
-  DPR =
-    Math.min(
-      window.devicePixelRatio || 1,
-      2
+    lightSwitch.classList.add(
+      "on"
     );
 
 
-  canvas.width =
-    Math.round(
-      W * DPR
+    darkness.classList.add(
+      "light-on"
     );
 
 
-  canvas.height =
-    Math.round(
-      H * DPR
+    instruction.classList.add(
+      "hide"
     );
 
 
-  ctx.setTransform(
-    DPR,
-    0,
-    0,
-    DPR,
-    0,
-    0
-  );
+    /*
+      Фотография появляется
+      немного позже света.
+    */
 
+    setTimeout(
+      () => {
 
-  createMask();
-}
+        photoCard.classList.add(
+          "visible"
+        );
 
-
-
-/* ==========================
-   НЕПРОЯВЛЕННАЯ ФОТОГРАФИЯ
-========================== */
-
-function createMask() {
-
-  ctx.globalCompositeOperation =
-    "source-over";
-
-
-  ctx.clearRect(
-    0,
-    0,
-    W,
-    H
-  );
-
-
-  /*
-    Мягкий кремовый слой.
-
-    Фотография немного видна снизу,
-    словно снимок ещё не проявился.
-  */
-
-  const gradient =
-    ctx.createLinearGradient(
-      0,
-      0,
-      W,
-      H
+      },
+      550
     );
 
 
-  gradient.addColorStop(
-    0,
-    "rgba(248,241,223,0.91)"
-  );
+    /*
+      Затем появляется новая подсказка.
+    */
 
+    setTimeout(
+      () => {
 
-  gradient.addColorStop(
-    0.45,
-    "rgba(239,225,201,0.88)"
-  );
+        instruction.textContent =
+          "Теперь прояви фотографию 📸";
 
 
-  gradient.addColorStop(
-    1,
-    "rgba(250,238,213,0.91)"
-  );
+        instruction.classList.remove(
+          "hide"
+        );
 
 
-  ctx.fillStyle =
-    gradient;
+        photoHint.classList.add(
+          "show"
+        );
 
-
-  ctx.fillRect(
-    0,
-    0,
-    W,
-    H
-  );
-
-
-  /*
-    Немного лёгкой текстуры,
-    чтобы слой не выглядел
-    просто однотонной плашкой.
-  */
-
-  for (
-    let i = 0;
-    i < 180;
-    i++
-  ) {
-
-    const x =
-      Math.random() * W;
-
-    const y =
-      Math.random() * H;
-
-
-    ctx.fillStyle =
-      "rgba(255,255,255,0.035)";
-
-
-    ctx.beginPath();
-
-
-    ctx.arc(
-      x,
-      y,
-      1 + Math.random() * 2,
-      0,
-      Math.PI * 2
-    );
-
-
-    ctx.fill();
-  }
-
-}
-
-
-
-/* ==========================
-   МЯГКОЕ ПРОЯВЛЕНИЕ
-========================== */
-
-function reveal(x, y) {
-
-  ctx.save();
-
-
-  /*
-    ВАЖНО.
-
-    Мы не удаляем слой полностью.
-    Один проход только немного
-    уменьшает его прозрачность.
-  */
-
-  ctx.globalCompositeOperation =
-    "destination-out";
-
-
-  const g =
-    ctx.createRadialGradient(
-
-      x,
-      y,
-      0,
-
-      x,
-      y,
-      BRUSH_RADIUS
-
-    );
-
-
-  g.addColorStop(
-    0,
-    `rgba(0,0,0,${BRUSH_POWER})`
-  );
-
-
-  g.addColorStop(
-    0.32,
-    `rgba(0,0,0,${BRUSH_POWER * 0.90})`
-  );
-
-
-  g.addColorStop(
-    0.65,
-    `rgba(0,0,0,${BRUSH_POWER * 0.38})`
-  );
-
-
-  g.addColorStop(
-    1,
-    "rgba(0,0,0,0)"
-  );
-
-
-  ctx.fillStyle = g;
-
-
-  ctx.beginPath();
-
-
-  ctx.arc(
-    x,
-    y,
-    BRUSH_RADIUS,
-    0,
-    Math.PI * 2
-  );
-
-
-  ctx.fill();
-
-
-  ctx.restore();
-
-}
-
-
-
-/* ==========================
-   МЕЖДУ ДВУМЯ ТОЧКАМИ
-========================== */
-
-function revealLine(
-  x1,
-  y1,
-  x2,
-  y2
-) {
-
-  const dx =
-    x2 - x1;
-
-  const dy =
-    y2 - y1;
-
-
-  const distance =
-    Math.sqrt(
-      dx * dx +
-      dy * dy
-    );
-
-
-  /*
-    Маленький шаг делает мазок
-    непрерывным.
-  */
-
-  const step =
-    BRUSH_RADIUS * 0.28;
-
-
-  const count =
-    Math.max(
-      1,
-      Math.ceil(
-        distance / step
-      )
-    );
-
-
-  for (
-    let i = 0;
-    i <= count;
-    i++
-  ) {
-
-    const t =
-      i / count;
-
-
-    reveal(
-
-      x1 +
-      dx * t,
-
-      y1 +
-      dy * t
-
-    );
-
-  }
-
-}
-
-
-
-/* ==========================
-   КООРДИНАТЫ
-========================== */
-
-function position(e) {
-
-  const rect =
-    canvas.getBoundingClientRect();
-
-
-  return {
-
-    x:
-      e.clientX -
-      rect.left,
-
-    y:
-      e.clientY -
-      rect.top
-
-  };
-
-}
-
-
-
-/* ==========================
-   КИСТЬ
-========================== */
-
-function showBrush(x, y) {
-
-  brush.style.left =
-    x + "px";
-
-
-  brush.style.top =
-    y + "px";
-
-
-  brush.style.opacity =
-    "1";
-
-}
-
-
-
-/* ==========================
-   НАЧАЛО
-========================== */
-
-function start() {
-
-  if (started) return;
-
-  started = true;
-
-
-  instruction.classList.add(
-    "hide"
-  );
-
-}
-
-
-
-/* ==========================
-   POINTER DOWN
-========================== */
-
-canvas.addEventListener(
-  "pointerdown",
-  e => {
-
-    if (finished) return;
-
-
-    e.preventDefault();
-
-
-    canvas.setPointerCapture(
-      e.pointerId
-    );
-
-
-    drawing = true;
-
-
-    start();
-
-
-    const p =
-      position(e);
-
-
-    lastX = p.x;
-    lastY = p.y;
-
-
-    showBrush(
-      p.x,
-      p.y
-    );
-
-
-    reveal(
-      p.x,
-      p.y
+      },
+      1300
     );
 
   }
 );
 
 
-
 /* ==========================
-   POINTER MOVE
+   ПРОЯВЛЯЕМ ФОТОГРАФИЮ
 ========================== */
 
-canvas.addEventListener(
-  "pointermove",
-  e => {
-
-    const p =
-      position(e);
-
-
-    showBrush(
-      p.x,
-      p.y
-    );
-
+photoCard.addEventListener(
+  "click",
+  () => {
 
     if (
-      !drawing ||
-      finished
+      !lightIsOn ||
+      photoDeveloped
     ) return;
 
 
-    revealLine(
+    photoDeveloped = true;
 
-      lastX,
-      lastY,
 
-      p.x,
-      p.y
-
+    photoHint.classList.remove(
+      "show"
     );
 
 
-    lastX = p.x;
-    lastY = p.y;
-
-
-    const now =
-      performance.now();
-
-
-    if (
-      now -
-      lastProgressCheck >
-      500
-    ) {
-
-      checkProgress();
-
-
-      lastProgressCheck =
-        now;
-
-    }
-
-  }
-);
-
-
-
-/* ==========================
-   POINTER UP
-========================== */
-
-canvas.addEventListener(
-  "pointerup",
-  () => {
-
-    drawing = false;
-
-    lastX = null;
-    lastY = null;
-
-
-    checkProgress();
-
-  }
-);
-
-
-
-canvas.addEventListener(
-  "pointercancel",
-  () => {
-
-    drawing = false;
-
-    lastX = null;
-    lastY = null;
-
-  }
-);
-
-
-
-canvas.addEventListener(
-  "pointerleave",
-  () => {
-
-    if (!drawing) {
-
-      brush.style.opacity =
-        "0";
-
-    }
-
-  }
-);
-
-
-
-/* ==========================
-   ПРОГРЕСС
-========================== */
-
-function checkProgress() {
-
-  if (finished) return;
-
-
-  const image =
-    ctx.getImageData(
-      0,
-      0,
-      canvas.width,
-      canvas.height
+    instruction.classList.add(
+      "hide"
     );
 
 
-  const data =
-    image.data;
+    /*
+      Мягкая вспышка.
+    */
 
-
-  let total = 0;
-
-  let revealed = 0;
-
-
-  /*
-    Не проверяем каждый пиксель.
-    Это сильно легче для браузера.
-  */
-
-  for (
-    let i = 3;
-    i < data.length;
-    i += 160
-  ) {
-
-    const alpha =
-      data[i];
-
-
-    revealed +=
-      1 -
-      alpha / 255;
-
-
-    total++;
-
-  }
-
-
-  const percent =
-    Math.min(
-      100,
-      revealed /
-      total *
-      100
+    flash.classList.remove(
+      "active"
     );
 
 
-  progressFill.style.width =
-    percent + "%";
+    void flash.offsetWidth;
 
 
-  if (
-    percent >=
-    FINISH_PERCENT
-  ) {
+    flash.classList.add(
+      "active"
+    );
 
-    finish();
+
+    /*
+      Фотография плавно получает:
+      цвет,
+      резкость,
+      контраст.
+    */
+
+    photo.classList.add(
+      "developed"
+    );
+
+
+    /*
+      Финальная надпись появляется
+      после завершения проявления.
+    */
+
+    setTimeout(
+      () => {
+
+        success.classList.add(
+          "show"
+        );
+
+      },
+      1900
+    );
+
+
+    setTimeout(
+      () => {
+
+        success.classList.remove(
+          "show"
+        );
+
+      },
+      3900
+    );
 
   }
-
-}
-
-
-
-/* ==========================
-   ФИНАЛ
-========================== */
-
-function finish() {
-
-  if (finished) return;
-
-
-  finished = true;
-
-  drawing = false;
-
-
-  /*
-    После того как ребёнок
-    проявил большую часть снимка,
-    остаток красиво проявляется сам.
-  */
-
-
-  canvas.style.transition =
-    "opacity 1.3s ease";
-
-
-  canvas.style.opacity =
-    "0";
-
-
-  brush.style.opacity =
-    "0";
-
-
-  progressFill.style.width =
-    "100%";
-
-
-  setTimeout(
-    () => {
-
-      success.classList.add(
-        "show"
-      );
-
-    },
-    450
-  );
-
-
-  setTimeout(
-    () => {
-
-      success.classList.remove(
-        "show"
-      );
-
-    },
-    2500
-  );
-
-}
-
-
-
-/* ==========================
-   ЗАПУСК
-========================== */
-
-window.addEventListener(
-  "load",
-  resize
 );
-
-
-if (
-  window.ResizeObserver
-) {
-
-  new ResizeObserver(
-    resize
-  ).observe(area);
-
-}
 
 </script>
 
