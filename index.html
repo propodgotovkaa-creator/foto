@@ -1,98 +1,1225 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
 
-  <title>Фотостудия капибары</title>
+<title>Прояви фотографию</title>
 
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      #fffaf0 0%,
+      #f4e3c9 55%,
+      #e2c6a1 100%
+    );
+}
+
+
+/* ==========================
+   ИГРА
+========================== */
+
+.game {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  padding: 24px;
+}
+
+
+/* ==========================
+   ИНСТРУКЦИЯ
+========================== */
+
+.instruction {
+  text-align: center;
+
+  color: #765336;
+
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+.instruction.hide {
+  opacity: 0;
+
+  transform:
+    translateY(-10px);
+}
+
+
+.title {
+  font-size: clamp(
+    26px,
+    4vw,
+    48px
+  );
+
+  font-weight: 800;
+}
+
+
+.subtitle {
+  margin-top: 6px;
+
+  font-size: clamp(
+    15px,
+    1.6vw,
+    21px
+  );
+
+  opacity: 0.72;
+}
+
+
+/* ==========================
+   ФОТО
+========================== */
+
+.photo-frame {
+  position: relative;
+
+  width: min(
+    78vw,
+    850px
+  );
+
+  aspect-ratio: 4 / 3;
+
+  padding:
+    14px
+    14px
+    48px;
+
+  background: #ffffff;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 24px 60px
+    rgba(91, 57, 28, 0.25);
+}
+
+
+.photo-area {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  background: #e5d4bc;
+
+  border-radius: 3px;
+
+  touch-action: none;
+}
+
+
+/* Временная фотография */
+
+.photo {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  pointer-events: none;
+
+  user-select: none;
+}
+
+
+/* Слой проявления */
+
+#mask {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  cursor: none;
+
+  touch-action: none;
+}
+
+
+/* ==========================
+   КИСТЬ
+========================== */
+
+.brush {
+  position: absolute;
+
+  width: 54px;
+  height: 54px;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: 5;
+
+  opacity: 0;
+
+  transform:
+    translate(-50%, -50%);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,220,0.95) 0%,
+      rgba(255,222,135,0.55) 28%,
+      rgba(255,202,90,0.18) 58%,
+      rgba(255,202,90,0) 75%
+    );
+
+  box-shadow:
+    0 0 22px
+    rgba(255,205,105,0.65);
+
+  transition:
+    opacity 0.12s ease;
+}
+
+
+/* ==========================
+   ПРОГРЕСС
+========================== */
+
+.progress-box {
+  width: min(
+    52vw,
+    500px
+  );
+
+  text-align: center;
+
+  color: #765336;
+}
+
+
+.progress-text {
+  margin-bottom: 6px;
+
+  font-size: 14px;
+}
+
+
+.progress-track {
+  width: 100%;
+  height: 9px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255,255,255,0.58);
+}
+
+
+.progress-fill {
+  width: 0%;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      90deg,
+      #f2c871,
+      #e7a84d
+    );
+
+  transition:
+    width 0.25s ease;
+}
+
+
+/* ==========================
+   ФИНАЛ
+========================== */
+
+.success {
+  position: fixed;
+
+  left: 50%;
+  top: 50%;
+
+  z-index: 50;
+
+  transform:
+    translate(-50%, -50%)
+    scale(0.75);
+
+  padding:
+    18px 30px;
+
+  border-radius: 20px;
+
+  background:
+    rgba(255,255,255,0.96);
+
+  color: #76502e;
+
+  font-size: clamp(
+    23px,
+    3vw,
+    38px
+  );
+
+  font-weight: 800;
+
+  box-shadow:
+    0 15px 45px
+    rgba(80,50,20,0.25);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+
+.success.show {
+  opacity: 1;
+
+  transform:
+    translate(-50%, -50%)
+    scale(1);
+}
+
+</style>
 </head>
+
 
 <body>
 
-  <main class="game">
+<div class="game">
 
-    <div class="instruction" id="instruction">
-      <div class="instruction-title">
-        Прояви фотографию!
-      </div>
+  <div
+    class="instruction"
+    id="instruction"
+  >
 
-      <div class="instruction-text">
-        Проводи мышкой по снимку ✨
-      </div>
+    <div class="title">
+      Прояви фотографию! ✨
     </div>
 
+    <div class="subtitle">
+      Проводи кисточкой по снимку
+    </div>
 
-    <div class="photo-frame">
+  </div>
+
+
+  <div class="photo-frame">
+
+    <div class="photo-area" id="photoArea">
 
       <!--
-        Настоящая фотография.
+        ПОКА ВРЕМЕННАЯ ФОТОГРАФИЯ.
+        Потом сюда поставим капибару.
       -->
+
       <img
-        id="photo"
         class="photo"
-        src="images/capybara.jpg"
-        alt="Капибара"
+        src="https://picsum.photos/id/1025/1200/900"
+        alt=""
         draggable="false"
       >
 
 
-      <!--
-        Здесь будет слой,
-        скрывающий фотографию.
-      -->
-      <canvas
-        id="developCanvas"
-      ></canvas>
+      <canvas id="mask"></canvas>
 
-
-      <!--
-        Мягкое свечение кисточки.
-      -->
       <div
-        id="brushGlow"
-        class="brush-glow"
+        class="brush"
+        id="brush"
       ></div>
 
     </div>
 
+  </div>
 
-    <div
-      class="progress"
-      id="progress"
-    >
-      <div class="progress-label">
-        Фотография проявляется...
-      </div>
 
-      <div class="progress-track">
-        <div
-          class="progress-fill"
-          id="progressFill"
-        ></div>
-      </div>
+  <div
+    class="progress-box"
+    id="progressBox"
+  >
+
+    <div class="progress-text">
+      Фотография проявляется...
     </div>
 
+    <div class="progress-track">
 
-    <div
-      class="success"
-      id="success"
-    >
-      ✨ Фотография готова! ✨
+      <div
+        class="progress-fill"
+        id="progressFill"
+      ></div>
+
     </div>
 
-  </main>
+  </div>
+
+</div>
 
 
-  <script src="game.js"></script>
+<div
+  class="success"
+  id="success"
+>
+  ✨ Фотография готова! ✨
+</div>
+
+
+
+<script>
+
+const canvas =
+  document.getElementById("mask");
+
+const ctx =
+  canvas.getContext(
+    "2d",
+    {
+      willReadFrequently: true
+    }
+  );
+
+
+const area =
+  document.getElementById(
+    "photoArea"
+  );
+
+
+const brush =
+  document.getElementById(
+    "brush"
+  );
+
+
+const instruction =
+  document.getElementById(
+    "instruction"
+  );
+
+
+const progressFill =
+  document.getElementById(
+    "progressFill"
+  );
+
+
+const progressBox =
+  document.getElementById(
+    "progressBox"
+  );
+
+
+const success =
+  document.getElementById(
+    "success"
+  );
+
+
+
+/* ==========================
+   НАСТРОЙКИ
+========================== */
+
+
+/*
+  Радиус небольшой.
+
+  Одним взмахом половина фотографии
+  не проявится.
+*/
+
+const BRUSH_RADIUS = 32;
+
+
+/*
+  Сила одного прохода.
+
+  0.22 означает:
+  фотография проявляется
+  ПОСТЕПЕННО.
+
+  Провела второй раз —
+  стало ярче.
+*/
+
+const BRUSH_POWER = 0.22;
+
+
+/*
+  Когда фотография считается
+  практически готовой.
+*/
+
+const FINISH_PERCENT = 72;
+
+
+
+let W = 1;
+let H = 1;
+
+let DPR = 1;
+
+let drawing = false;
+
+let lastX = null;
+let lastY = null;
+
+let started = false;
+let finished = false;
+
+let lastProgressCheck = 0;
+
+
+
+/* ==========================
+   РАЗМЕР
+========================== */
+
+function resize() {
+
+  const rect =
+    area.getBoundingClientRect();
+
+
+  W = rect.width;
+  H = rect.height;
+
+
+  DPR =
+    Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
+
+
+  canvas.width =
+    Math.round(
+      W * DPR
+    );
+
+
+  canvas.height =
+    Math.round(
+      H * DPR
+    );
+
+
+  ctx.setTransform(
+    DPR,
+    0,
+    0,
+    DPR,
+    0,
+    0
+  );
+
+
+  createMask();
+}
+
+
+
+/* ==========================
+   НЕПРОЯВЛЕННАЯ ФОТОГРАФИЯ
+========================== */
+
+function createMask() {
+
+  ctx.globalCompositeOperation =
+    "source-over";
+
+
+  ctx.clearRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+
+  /*
+    Мягкий кремовый слой.
+
+    Фотография немного видна снизу,
+    словно снимок ещё не проявился.
+  */
+
+  const gradient =
+    ctx.createLinearGradient(
+      0,
+      0,
+      W,
+      H
+    );
+
+
+  gradient.addColorStop(
+    0,
+    "rgba(248,241,223,0.91)"
+  );
+
+
+  gradient.addColorStop(
+    0.45,
+    "rgba(239,225,201,0.88)"
+  );
+
+
+  gradient.addColorStop(
+    1,
+    "rgba(250,238,213,0.91)"
+  );
+
+
+  ctx.fillStyle =
+    gradient;
+
+
+  ctx.fillRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+
+  /*
+    Немного лёгкой текстуры,
+    чтобы слой не выглядел
+    просто однотонной плашкой.
+  */
+
+  for (
+    let i = 0;
+    i < 180;
+    i++
+  ) {
+
+    const x =
+      Math.random() * W;
+
+    const y =
+      Math.random() * H;
+
+
+    ctx.fillStyle =
+      "rgba(255,255,255,0.035)";
+
+
+    ctx.beginPath();
+
+
+    ctx.arc(
+      x,
+      y,
+      1 + Math.random() * 2,
+      0,
+      Math.PI * 2
+    );
+
+
+    ctx.fill();
+  }
+
+}
+
+
+
+/* ==========================
+   МЯГКОЕ ПРОЯВЛЕНИЕ
+========================== */
+
+function reveal(x, y) {
+
+  ctx.save();
+
+
+  /*
+    ВАЖНО.
+
+    Мы не удаляем слой полностью.
+    Один проход только немного
+    уменьшает его прозрачность.
+  */
+
+  ctx.globalCompositeOperation =
+    "destination-out";
+
+
+  const g =
+    ctx.createRadialGradient(
+
+      x,
+      y,
+      0,
+
+      x,
+      y,
+      BRUSH_RADIUS
+
+    );
+
+
+  g.addColorStop(
+    0,
+    `rgba(0,0,0,${BRUSH_POWER})`
+  );
+
+
+  g.addColorStop(
+    0.32,
+    `rgba(0,0,0,${BRUSH_POWER * 0.90})`
+  );
+
+
+  g.addColorStop(
+    0.65,
+    `rgba(0,0,0,${BRUSH_POWER * 0.38})`
+  );
+
+
+  g.addColorStop(
+    1,
+    "rgba(0,0,0,0)"
+  );
+
+
+  ctx.fillStyle = g;
+
+
+  ctx.beginPath();
+
+
+  ctx.arc(
+    x,
+    y,
+    BRUSH_RADIUS,
+    0,
+    Math.PI * 2
+  );
+
+
+  ctx.fill();
+
+
+  ctx.restore();
+
+}
+
+
+
+/* ==========================
+   МЕЖДУ ДВУМЯ ТОЧКАМИ
+========================== */
+
+function revealLine(
+  x1,
+  y1,
+  x2,
+  y2
+) {
+
+  const dx =
+    x2 - x1;
+
+  const dy =
+    y2 - y1;
+
+
+  const distance =
+    Math.sqrt(
+      dx * dx +
+      dy * dy
+    );
+
+
+  /*
+    Маленький шаг делает мазок
+    непрерывным.
+  */
+
+  const step =
+    BRUSH_RADIUS * 0.28;
+
+
+  const count =
+    Math.max(
+      1,
+      Math.ceil(
+        distance / step
+      )
+    );
+
+
+  for (
+    let i = 0;
+    i <= count;
+    i++
+  ) {
+
+    const t =
+      i / count;
+
+
+    reveal(
+
+      x1 +
+      dx * t,
+
+      y1 +
+      dy * t
+
+    );
+
+  }
+
+}
+
+
+
+/* ==========================
+   КООРДИНАТЫ
+========================== */
+
+function position(e) {
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+
+  return {
+
+    x:
+      e.clientX -
+      rect.left,
+
+    y:
+      e.clientY -
+      rect.top
+
+  };
+
+}
+
+
+
+/* ==========================
+   КИСТЬ
+========================== */
+
+function showBrush(x, y) {
+
+  brush.style.left =
+    x + "px";
+
+
+  brush.style.top =
+    y + "px";
+
+
+  brush.style.opacity =
+    "1";
+
+}
+
+
+
+/* ==========================
+   НАЧАЛО
+========================== */
+
+function start() {
+
+  if (started) return;
+
+  started = true;
+
+
+  instruction.classList.add(
+    "hide"
+  );
+
+}
+
+
+
+/* ==========================
+   POINTER DOWN
+========================== */
+
+canvas.addEventListener(
+  "pointerdown",
+  e => {
+
+    if (finished) return;
+
+
+    e.preventDefault();
+
+
+    canvas.setPointerCapture(
+      e.pointerId
+    );
+
+
+    drawing = true;
+
+
+    start();
+
+
+    const p =
+      position(e);
+
+
+    lastX = p.x;
+    lastY = p.y;
+
+
+    showBrush(
+      p.x,
+      p.y
+    );
+
+
+    reveal(
+      p.x,
+      p.y
+    );
+
+  }
+);
+
+
+
+/* ==========================
+   POINTER MOVE
+========================== */
+
+canvas.addEventListener(
+  "pointermove",
+  e => {
+
+    const p =
+      position(e);
+
+
+    showBrush(
+      p.x,
+      p.y
+    );
+
+
+    if (
+      !drawing ||
+      finished
+    ) return;
+
+
+    revealLine(
+
+      lastX,
+      lastY,
+
+      p.x,
+      p.y
+
+    );
+
+
+    lastX = p.x;
+    lastY = p.y;
+
+
+    const now =
+      performance.now();
+
+
+    if (
+      now -
+      lastProgressCheck >
+      500
+    ) {
+
+      checkProgress();
+
+
+      lastProgressCheck =
+        now;
+
+    }
+
+  }
+);
+
+
+
+/* ==========================
+   POINTER UP
+========================== */
+
+canvas.addEventListener(
+  "pointerup",
+  () => {
+
+    drawing = false;
+
+    lastX = null;
+    lastY = null;
+
+
+    checkProgress();
+
+  }
+);
+
+
+
+canvas.addEventListener(
+  "pointercancel",
+  () => {
+
+    drawing = false;
+
+    lastX = null;
+    lastY = null;
+
+  }
+);
+
+
+
+canvas.addEventListener(
+  "pointerleave",
+  () => {
+
+    if (!drawing) {
+
+      brush.style.opacity =
+        "0";
+
+    }
+
+  }
+);
+
+
+
+/* ==========================
+   ПРОГРЕСС
+========================== */
+
+function checkProgress() {
+
+  if (finished) return;
+
+
+  const image =
+    ctx.getImageData(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+
+  const data =
+    image.data;
+
+
+  let total = 0;
+
+  let revealed = 0;
+
+
+  /*
+    Не проверяем каждый пиксель.
+    Это сильно легче для браузера.
+  */
+
+  for (
+    let i = 3;
+    i < data.length;
+    i += 160
+  ) {
+
+    const alpha =
+      data[i];
+
+
+    revealed +=
+      1 -
+      alpha / 255;
+
+
+    total++;
+
+  }
+
+
+  const percent =
+    Math.min(
+      100,
+      revealed /
+      total *
+      100
+    );
+
+
+  progressFill.style.width =
+    percent + "%";
+
+
+  if (
+    percent >=
+    FINISH_PERCENT
+  ) {
+
+    finish();
+
+  }
+
+}
+
+
+
+/* ==========================
+   ФИНАЛ
+========================== */
+
+function finish() {
+
+  if (finished) return;
+
+
+  finished = true;
+
+  drawing = false;
+
+
+  /*
+    После того как ребёнок
+    проявил большую часть снимка,
+    остаток красиво проявляется сам.
+  */
+
+
+  canvas.style.transition =
+    "opacity 1.3s ease";
+
+
+  canvas.style.opacity =
+    "0";
+
+
+  brush.style.opacity =
+    "0";
+
+
+  progressFill.style.width =
+    "100%";
+
+
+  setTimeout(
+    () => {
+
+      success.classList.add(
+        "show"
+      );
+
+    },
+    450
+  );
+
+
+  setTimeout(
+    () => {
+
+      success.classList.remove(
+        "show"
+      );
+
+    },
+    2500
+  );
+
+}
+
+
+
+/* ==========================
+   ЗАПУСК
+========================== */
+
+window.addEventListener(
+  "load",
+  resize
+);
+
+
+if (
+  window.ResizeObserver
+) {
+
+  new ResizeObserver(
+    resize
+  ).observe(area);
+
+}
+
+</script>
 
 </body>
 </html>
