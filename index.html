@@ -12,6 +12,10 @@
 
 <style>
 
+/* =========================================
+   ОСНОВА
+========================================= */
+
 *{
   box-sizing:border-box;
 }
@@ -25,14 +29,9 @@ body{
 }
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Arial, Helvetica, sans-serif;
   background:#1d1712;
 }
-
-
-/* =========================================
-   ВСЯ ИГРА
-========================================= */
 
 .game{
   position:relative;
@@ -59,7 +58,8 @@ body{
 
   z-index:80;
 
-  background:rgba(6,7,9,.93);
+  background:
+    rgba(6,7,9,.93);
 
   pointer-events:none;
 
@@ -221,7 +221,7 @@ body{
 
 
 /* =========================================
-   ФОТОГРАФИЯ
+   ФОТОКАРТОЧКА
 ========================================= */
 
 .photo-card{
@@ -232,9 +232,14 @@ body{
 
   z-index:40;
 
-  width:min(61vw,900px);
+  width:
+    min(58vw,820px);
 
-  aspect-ratio:16/10;
+  /*
+    Более универсальный формат.
+    Фото не обрезается.
+  */
+  aspect-ratio:4 / 3;
 
   transform:
     translate(-50%,-50%)
@@ -268,7 +273,6 @@ body{
     scale(1);
 }
 
-
 .photo-area{
   position:relative;
 
@@ -277,13 +281,17 @@ body{
 
   overflow:hidden;
 
-  background:#d9d1c5;
+  background:#eeeae2;
 
   border-radius:3px;
 
   touch-action:none;
 }
 
+
+/* =========================================
+   САМА ФОТОГРАФИЯ
+========================================= */
 
 .photo{
   position:absolute;
@@ -292,27 +300,26 @@ body{
   width:100%;
   height:100%;
 
-  object-fit:cover;
+  /*
+    ВАЖНО:
+    теперь фотография всегда
+    показывается целиком.
+  */
+  object-fit:contain;
 
   pointer-events:none;
   user-select:none;
 
-  /*
-    Непроявленная фотография
-  */
-
   filter:
-    grayscale(.82)
-    sepia(.14)
-    blur(4px)
-    brightness(1.25)
-    contrast(.78)
-    saturate(.30);
+    grayscale(.9)
+    brightness(1.12)
+    contrast(.80)
+    saturate(.18);
 
-  opacity:.78;
+  opacity:.80;
 
   transform:
-    scale(1.018);
+    scale(1);
 
   transition:
     filter 2.1s cubic-bezier(.22,.8,.3,1),
@@ -320,12 +327,9 @@ body{
     transform 2.1s cubic-bezier(.22,.8,.3,1);
 }
 
-
 .photo.developed{
   filter:
     grayscale(0)
-    sepia(0)
-    blur(0)
     brightness(1)
     contrast(1)
     saturate(1);
@@ -338,12 +342,78 @@ body{
 
 
 /* =========================================
+   ЗАСВЕЧЕННЫЙ СЛОЙ
+
+   Он появляется СРАЗУ.
+   Поэтому следующую картинку
+   нельзя подсмотреть.
+========================================= */
+
+.exposure-layer{
+  position:absolute;
+  inset:0;
+
+  z-index:10;
+
+  pointer-events:none;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(250,248,239,.965),
+      rgba(232,230,220,.94),
+      rgba(248,246,238,.965)
+    );
+
+  backdrop-filter:
+    blur(9px)
+    grayscale(1);
+
+  -webkit-backdrop-filter:
+    blur(9px)
+    grayscale(1);
+
+  opacity:1;
+
+  transition:
+    opacity 1.8s ease;
+}
+
+
+/*
+  Немного неоднородности,
+  чтобы это выглядело
+  как настоящая фотобумага.
+*/
+
+.exposure-layer::after{
+  content:"";
+
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(
+      circle at 28% 30%,
+      rgba(255,255,255,.30),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 72% 68%,
+      rgba(220,215,202,.17),
+      transparent 42%
+    );
+
+  opacity:.75;
+}
+
+
+/* =========================================
    ВОДЯНОЙ СЛОЙ
 ========================================= */
 
 .water-layer{
   position:absolute;
-
   inset:0;
 
   z-index:30;
@@ -359,7 +429,9 @@ body{
 }
 
 
-/* Каждое отдельное пятно */
+/* =========================================
+   ПЯТНА ВОДЫ
+========================================= */
 
 .water-blob{
   position:absolute;
@@ -370,7 +442,7 @@ body{
 
   transform:
     translate(-50%,-50%)
-    scale(.22);
+    scale(.20);
 
   transform-origin:center;
 
@@ -387,7 +459,6 @@ body{
     cubic-bezier(.16,.8,.25,1)
     forwards;
 }
-
 
 @keyframes blobAppear{
 
@@ -414,7 +485,7 @@ body{
 
 
 /* =========================================
-   ВОЛНА РАСТЕКАНИЯ
+   КРАЙ РАСТЕКАНИЯ
 ========================================= */
 
 .water-edge{
@@ -444,14 +515,12 @@ body{
     brightness(1.03);
 }
 
-
 .water-edge.spread{
   animation:
     edgeSpread 1.75s
     cubic-bezier(.12,.66,.22,1)
     forwards;
 }
-
 
 @keyframes edgeSpread{
 
@@ -478,7 +547,7 @@ body{
 
 
 /* =========================================
-   ПОЛНАЯ ВОДЯНАЯ ПЛЁНКА
+   ПОЛНОСТЬЮ МОКРАЯ ФОТОГРАФИЯ
 ========================================= */
 
 .full-water{
@@ -501,15 +570,14 @@ body{
   overflow:hidden;
 }
 
-
 .full-water.show{
   opacity:1;
 }
 
 
-/*
-  Двигающиеся настоящие блики
-*/
+/* =========================================
+   ДВИЖУЩИЕСЯ БЛИКИ
+========================================= */
 
 .water-shine{
   position:absolute;
@@ -535,7 +603,6 @@ body{
     infinite alternate;
 }
 
-
 @keyframes shineMove{
 
   from{
@@ -549,13 +616,10 @@ body{
       translate(3%,2%)
       scale(1.08);
   }
-
 }
 
 
-/*
-  Очень мягкий дополнительный блик
-*/
+/* Большой проходящий блик */
 
 .full-water::after{
   content:"";
@@ -586,7 +650,6 @@ body{
     ease-in-out infinite;
 }
 
-
 @keyframes waterReflection{
 
   0%{
@@ -596,7 +659,6 @@ body{
   100%{
     left:120%;
   }
-
 }
 
 
@@ -634,7 +696,6 @@ body{
     opacity .45s ease,
     transform .45s ease;
 }
-
 
 .developer.show{
   opacity:1;
@@ -676,18 +737,14 @@ body{
     opacity .4s ease;
 }
 
-
 .brush-wrap.show{
   opacity:1;
 }
 
-
 .brush-wrap.dragging{
   cursor:grabbing;
-
   transition:none;
 }
-
 
 .brush-img{
   display:block;
@@ -706,16 +763,11 @@ body{
 
 
 /* =========================================
-   МОКРАЯ ЩЕТИНА — БЕЗ ВТОРОЙ КАРТИНКИ
+   МОКРАЯ ЩЕТИНА
 ========================================= */
 
 .wet-glow{
   position:absolute;
-
-  /*
-    У нашей PNG щетина
-    находится слева снизу.
-  */
 
   left:3%;
   bottom:3%;
@@ -748,14 +800,13 @@ body{
     opacity .25s ease;
 }
 
-
 .brush-wrap.wet .wet-glow{
   opacity:1;
 }
 
 
 /* =========================================
-   КАПЛЯ НА ЩЕТИНЕ
+   КАПЛЯ НА КИСТИ
 ========================================= */
 
 .brush-drop{
@@ -800,7 +851,6 @@ body{
     opacity .25s ease;
 }
 
-
 .brush-wrap.wet .brush-drop{
   opacity:1;
 
@@ -809,7 +859,6 @@ body{
     ease-in-out
     infinite alternate;
 }
-
 
 @keyframes dropSwing{
 
@@ -824,7 +873,6 @@ body{
       rotate(8deg)
       scaleY(1.12);
   }
-
 }
 
 
@@ -857,7 +905,6 @@ body{
     ease-in forwards;
 }
 
-
 @keyframes fallingDrop{
 
   from{
@@ -875,12 +922,11 @@ body{
       translateY(38px)
       scale(.65);
   }
-
 }
 
 
 /* =========================================
-   КНОПКА
+   КНОПКА СЛЕДУЮЩАЯ
 ========================================= */
 
 .next-button{
@@ -926,7 +972,6 @@ body{
     opacity .35s ease,
     transform .35s ease;
 }
-
 
 .next-button.show{
   opacity:1;
@@ -983,7 +1028,6 @@ body{
     transform .4s ease;
 }
 
-
 .success.show{
   opacity:1;
 
@@ -992,6 +1036,10 @@ body{
     scale(1);
 }
 
+
+/* =========================================
+   МОБИЛЬНЫЕ РАЗМЕРЫ
+========================================= */
 
 @media(max-width:800px){
 
@@ -1010,7 +1058,6 @@ body{
   .switch-wrap{
     right:15px;
   }
-
 }
 
 </style>
@@ -1077,7 +1124,19 @@ body{
       >
 
 
-      <!-- ВОДА -->
+      <!--
+        ЗАСВЕЧЕННАЯ ФОТОБУМАГА
+      -->
+
+      <div
+        id="exposureLayer"
+        class="exposure-layer"
+      ></div>
+
+
+      <!--
+        ВОДА
+      -->
 
       <div
         class="water-layer"
@@ -1163,7 +1222,7 @@ body{
 <script>
 
 /* =========================================
-   ФОТО
+   ФОТОГРАФИИ
 ========================================= */
 
 const photos = [
@@ -1224,6 +1283,11 @@ const photoArea =
 const photo =
   document.getElementById(
     "photo"
+  );
+
+const exposureLayer =
+  document.getElementById(
+    "exposureLayer"
   );
 
 const developer =
@@ -1290,23 +1354,11 @@ let previousY =
 let previousTime =
   null;
 
-
-/*
-  Сколько времени ребёнок
-  действительно мазал фотографию.
-*/
-
 let paintingTime =
   0;
 
-
-/*
-  И сколько примерно прошёл кистью.
-*/
-
 let paintingDistance =
   0;
-
 
 let lastBlobX =
   null;
@@ -1341,7 +1393,6 @@ function changeInstruction(text){
     },
     250
   );
-
 }
 
 
@@ -1455,7 +1506,19 @@ function startPhoto(){
 
 
   /*
-    Очищаем старые водяные пятна.
+    СРАЗУ закрываем фото
+    засвеченным слоем.
+  */
+
+  exposureLayer.style.transition =
+    "none";
+
+  exposureLayer.style.opacity =
+    "1";
+
+
+  /*
+    Убираем старую воду.
   */
 
   waterLayer
@@ -1463,7 +1526,8 @@ function startPhoto(){
       ".water-blob"
     )
     .forEach(
-      blob => blob.remove()
+      blob =>
+        blob.remove()
     );
 
 
@@ -1487,7 +1551,7 @@ function startPhoto(){
 
 
   /*
-    Кисть возвращаем справа.
+    Кисточка снова справа.
   */
 
   brushWrap.classList.remove(
@@ -1533,7 +1597,7 @@ function startPhoto(){
 
 
 /* =========================================
-   ПОЛОЖЕНИЕ ЩЕТИНЫ
+   КОНЧИК КИСТИ
 ========================================= */
 
 function getBrushTip(){
@@ -1543,20 +1607,15 @@ function getBrushTip(){
       .getBoundingClientRect();
 
 
-  /*
-    Эта точка соответствует
-    концу щетины brush.png.
-  */
-
   return{
 
     x:
       rect.left +
-      rect.width * .14,
+      rect.width*.14,
 
     y:
       rect.top +
-      rect.height * .83
+      rect.height*.83
 
   };
 
@@ -1564,7 +1623,7 @@ function getBrushTip(){
 
 
 /* =========================================
-   DRAG
+   DRAG КИСТИ
 ========================================= */
 
 brushWrap.addEventListener(
@@ -1653,13 +1712,15 @@ brushWrap.addEventListener(
     const dx =
       previousX === null
       ? 0
-      : e.clientX - previousX;
+      : e.clientX -
+        previousX;
 
 
     const dy =
       previousY === null
       ? 0
-      : e.clientY - previousY;
+      : e.clientY -
+        previousY;
 
 
     brushWrap.style.left =
@@ -1677,11 +1738,6 @@ brushWrap.addEventListener(
       ) +
       "px";
 
-
-    /*
-      Кисточка слегка живёт
-      вместе с движением.
-    */
 
     const angle =
       Math.max(
@@ -1770,7 +1826,7 @@ brushWrap.addEventListener(
 
 
 /* =========================================
-   МАКАЕМ В РАСТВОР
+   МАКАЕМ В БАНКУ
 ========================================= */
 
 function checkDip(){
@@ -1848,11 +1904,13 @@ function splash(x,y){
   ){
 
     createDrop(
+
       x +
       (Math.random()-.5)*26,
 
       y +
       Math.random()*5
+
     );
 
   }
@@ -1861,13 +1919,10 @@ function splash(x,y){
 
 
 /* =========================================
-   ОТДЕЛЬНАЯ КАПЛЯ
+   КАПЛЯ
 ========================================= */
 
-function createDrop(
-  x,
-  y
-){
+function createDrop(x,y){
 
   const drop =
     document.createElement(
@@ -1892,7 +1947,8 @@ function createDrop(
 
 
   setTimeout(
-    () => drop.remove(),
+    () =>
+      drop.remove(),
     800
   );
 
@@ -1947,7 +2003,7 @@ function looseDrop(
 
 
 /* =========================================
-   МАЗАНИЕ ВОДОЙ
+   НАНОСИМ ВОДУ
 ========================================= */
 
 function paintWater(
@@ -1995,13 +2051,9 @@ function paintWater(
     rect.top;
 
 
-  /*
-    Считаем настоящее время
-    движения по фотографии.
-  */
-
   if(
-    previousTime !== null
+    previousTime !==
+    null
   ){
 
     paintingTime +=
@@ -2021,19 +2073,13 @@ function paintWater(
     );
 
 
-  /*
-    Не создаём PNG каждый пиксель.
-
-    Новое водяное пятно примерно
-    каждые 26 px.
-  */
-
   let shouldBlob =
     false;
 
 
   if(
-    lastBlobX === null
+    lastBlobX ===
+    null
   ){
 
     shouldBlob =
@@ -2050,7 +2096,7 @@ function paintWater(
 
     if(
       distance >
-      24
+      28
     ){
 
       shouldBlob =
@@ -2083,8 +2129,8 @@ function paintWater(
 
 
   /*
-    Примерно 2 секунды настоящей
-    работы кистью + некоторое движение.
+    После небольшой реальной работы
+    запускаем растекание.
   */
 
   if(
@@ -2102,7 +2148,7 @@ function paintWater(
 
 
 /* =========================================
-   СОЗДАЁМ РЕАЛЬНОЕ ПЯТНО WATER-BLOB.PNG
+   WATER-BLOB.PNG
 ========================================= */
 
 function createWaterBlob(
@@ -2134,12 +2180,6 @@ function createWaterBlob(
     y + "px";
 
 
-  /*
-    Немного меняем размер,
-    чтобы не было ощущения
-    копипаста одной картинки.
-  */
-
   const size =
     105 +
     Math.random()*70;
@@ -2148,11 +2188,6 @@ function createWaterBlob(
   blob.style.width =
     size + "px";
 
-
-  /*
-    Поворачиваем примерно
-    по движению кисти.
-  */
 
   const angle =
     Math.atan2(
@@ -2171,22 +2206,6 @@ function createWaterBlob(
     "deg";
 
 
-  /*
-    Немного различается прозрачность.
-  */
-
-  blob.style.opacity =
-    (
-      .36 +
-      Math.random()*.12
-    );
-
-
-  /*
-    Вставляем до edge/fullWater,
-    чтобы эти слои оставались сверху.
-  */
-
   waterLayer.insertBefore(
     blob,
     waterEdge
@@ -2196,7 +2215,7 @@ function createWaterBlob(
 
 
 /* =========================================
-   АВТОМАТИЧЕСКОЕ РАСТЕКАНИЕ
+   РАСТЕКАНИЕ
 ========================================= */
 
 function beginFlood(){
@@ -2224,10 +2243,6 @@ function beginFlood(){
   );
 
 
-  /*
-    Большой красивый фронт жидкости.
-  */
-
   waterEdge.classList.remove(
     "spread"
   );
@@ -2240,12 +2255,6 @@ function beginFlood(){
     "spread"
   );
 
-
-  /*
-    Пока фронт расширяется,
-    добавляем ещё несколько
-    крупных пятен воды.
-  */
 
   const spots = [
 
@@ -2291,11 +2300,6 @@ function beginFlood(){
   );
 
 
-  /*
-    Через секунду появляется
-    единая мокрая плёнка.
-  */
-
   setTimeout(
     () => {
 
@@ -2308,10 +2312,6 @@ function beginFlood(){
   );
 
 
-  /*
-    Кисточка плавно исчезает.
-  */
-
   setTimeout(
     () => {
 
@@ -2322,10 +2322,6 @@ function beginFlood(){
     1150
   );
 
-
-  /*
-    Вода полностью легла.
-  */
 
   setTimeout(
     () => {
@@ -2346,7 +2342,7 @@ function beginFlood(){
 
 
 /* =========================================
-   КРУПНЫЕ ПЯТНА ПРИ РАСТЕКАНИИ
+   КРУПНЫЕ ВОДЯНЫЕ ПЯТНА
 ========================================= */
 
 function createLargeBlob(
@@ -2384,10 +2380,6 @@ function createLargeBlob(
     "px";
 
 
-  blob.style.opacity =
-    ".42";
-
-
   blob.style.rotate =
     (
       Math.random()*360
@@ -2404,7 +2396,7 @@ function createLargeBlob(
 
 
 /* =========================================
-   ПРОЯВЛЯЕМ ФОТОГРАФИЮ
+   ПРОЯВЛЯЕМ ФОТО
 ========================================= */
 
 photoCard.addEventListener(
@@ -2427,8 +2419,7 @@ photoCard.addEventListener(
 
 
     /*
-      Вода постепенно исчезает,
-      будто впитывается.
+      Вода впитывается.
     */
 
     waterLayer.style.opacity =
@@ -2436,8 +2427,19 @@ photoCard.addEventListener(
 
 
     /*
-      Одновременно фотография
-      становится настоящей.
+      Засвеченная бумага исчезает.
+    */
+
+    exposureLayer.style.transition =
+      "opacity 1.8s ease";
+
+    exposureLayer.style.opacity =
+      "0";
+
+
+    /*
+      Одновременно проявляется
+      настоящая фотография.
     */
 
     setTimeout(
@@ -2507,6 +2509,20 @@ nextButton.addEventListener(
     );
 
 
+    /*
+      КЛЮЧЕВОЙ МОМЕНТ:
+
+      СНАЧАЛА закрываем фото.
+      И только потом меняем src.
+    */
+
+    exposureLayer.style.transition =
+      "none";
+
+    exposureLayer.style.opacity =
+      "1";
+
+
     photoCard.style.opacity =
       "0";
 
@@ -2527,10 +2543,6 @@ nextButton.addEventListener(
           "developed"
         );
 
-
-        /*
-          Вода снова полностью очищается.
-        */
 
         waterLayer.style.opacity =
           "1";
@@ -2563,7 +2575,7 @@ nextButton.addEventListener(
         startPhoto();
 
       },
-      500
+      450
     );
 
   }
@@ -2572,23 +2584,40 @@ nextButton.addEventListener(
 
 /* =========================================
    PRELOAD
+
+   Загружаем только ближайшие картинки,
+   чтобы не перегружать игру.
+========================================= */
+
+function preloadPhoto(index){
+
+  if(
+    index < 0 ||
+    index >=
+    photos.length
+  ) return;
+
+
+  const image =
+    new Image();
+
+
+  image.src =
+    photos[index];
+
+}
+
+
+/* =========================================
+   START
 ========================================= */
 
 window.addEventListener(
   "load",
   () => {
 
-    photos.forEach(
-      src => {
-
-        const image =
-          new Image();
-
-        image.src =
-          src;
-
-      }
-    );
+    preloadPhoto(0);
+    preloadPhoto(1);
 
 
     [
