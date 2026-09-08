@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Фотостудия капибары</title>
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+</head>
+
+<body>
+
+  <main class="game">
+
+    <div class="instruction" id="instruction">
+      <div class="instruction-title">
+        Прояви фотографию!
+      </div>
+
+      <div class="instruction-text">
+        Проводи мышкой по снимку ✨
+      </div>
+    </div>
+
+
+    <div class="photo-frame">
+
+      <!--
+        Настоящая фотография.
+      -->
+      <img
+        id="photo"
+        class="photo"
+        src="images/capybara.jpg"
+        alt="Капибара"
+        draggable="false"
+      >
+
+
+      <!--
+        Здесь будет слой,
+        скрывающий фотографию.
+      -->
+      <canvas
+        id="developCanvas"
+      ></canvas>
+
+
+      <!--
+        Мягкое свечение кисточки.
+      -->
+      <div
+        id="brushGlow"
+        class="brush-glow"
+      ></div>
+
+    </div>
+
+
+    <div
+      class="progress"
+      id="progress"
+    >
+      <div class="progress-label">
+        Фотография проявляется...
+      </div>
+
+      <div class="progress-track">
+        <div
+          class="progress-fill"
+          id="progressFill"
+        ></div>
+      </div>
+    </div>
+
+
+    <div
+      class="success"
+      id="success"
+    >
+      ✨ Фотография готова! ✨
+    </div>
+
+  </main>
+
+
+  <script src="game.js"></script>
+
+</body>
+</html>
